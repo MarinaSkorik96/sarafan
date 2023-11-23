@@ -1,0 +1,13 @@
+.add-comments{
+  background-color: rgb(189, 255, 193);
+  border: 1px solid black;
+  height: 20px;
+  margin: 20px 0px 20px 0px;
+  padding: 5px;
+}
+.text{
+  color:black;
+  font-size: 14px;
+  line-height: 24px;
+
+}
