@@ -1,3 +1,4 @@
 .comments{
-  display: none;
+  /* background-color: red; */
+  border-top: 1px solid rgb(220, 225,230);
 }
