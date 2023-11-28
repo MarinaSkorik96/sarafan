@@ -37,16 +37,19 @@ const Post = () => {
 
               </div>
               <div key={post.id} className="post_main">
-                <div className="post_header">
-                  {currentData && <p className="post_author">
-                    {currentData.find(user => user.id === post.userId).name}
-                  </p>}
-                  <h3 className="post_title">{post.title}</h3>
-                  <p className="post_text">{post.body}</p>
-                </div>
-                <button className="post_button-comments">Комментарии</button>
+                <>
+                  <div className="post_header">
+                    {currentData && <p className="post_author">
+                      {currentData.find(user => user.id === post.userId).name}
+                    </p>}
+                    <h3 className="post_title">{post.title}</h3>
+                    <p className="post_text">{post.body}</p>
+                  </div>
+                  <button className="post_button-comments">Комментарии</button>
+                </>
+                <Comments post={post} />
+
               </div>
-              <Comments post={post} />
             </div>
           </div>
         )

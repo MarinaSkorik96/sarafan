@@ -1,4 +1,37 @@
 .comments{
   /* background-color: red; */
-  border-top: 1px solid rgb(220, 225,230);
+  border-top: 1px solid #05386b8a;
+  display: flex;
+  flex-direction: column;
+}
+
+.comment {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  border-bottom: 1px solid rgb(220, 225,230) ;
+  padding-bottom: 8px;
+}
+
+.comment:last-child{
+  border-bottom: none;
+}
+.comment_name {
+  text-align: justify;
+  padding-left: 10px;
+}
+.comment_email{
+  padding-left: 10px;
+  color: black;
+  font-size: 12px;
+  text-align: justify;
+
+}
+.comment_body{
+  margin-top: 10px;
+  text-indent:20px;
+  color: black;
+  font-size: 16px;
+  text-align: justify;
 }

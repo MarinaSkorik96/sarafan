@@ -16,9 +16,9 @@ const Comments = ({ post }) => {
         if (comment.postId === post.id) {
           return (
             <div className="comment">
-              <div className="comment_name">{comment.name}</div>
-              <div className="comment_email">{comment.email}</div>
-              <div className="comment_body">{comment.body}</div>
+              <h4 className="comment_name">{comment.name}</h4>
+              <p className="comment_email">{comment.email}</p>
+              <p className="comment_body">{comment.body}</p>
             </div>
           )
         }
