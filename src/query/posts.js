@@ -8,10 +8,17 @@ export const tracksApi = createApi({
     baseUrl: 'https://jsonplaceholder.typicode.com',
   }),
   endpoints: (build) => ({
-    getAllComments: build.query({
+    getAllPosts: build.query({
       query: () => '/posts/',
-  }),
-})
+    }),
+    getAllUsers: build.query({
+      query: () => '/users/',
+    }),
+    getAllComments: build.query({
+      query: () => '/comments/',
+    }),
+
+  })
 })
 
-export const { useGetAllCommentsQuery} = tracksApi
+export const { useGetAllPostsQuery, useGetAllUsersQuery, useGetAllCommentsQuery } = tracksApi

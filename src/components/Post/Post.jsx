@@ -1,28 +1,25 @@
 import React from "react";
 import './PostStyles.css'
-import { useGetAllCommentsQuery } from "../../query/posts";
+import { useGetAllPostsQuery, useGetAllUsersQuery, useGetAllCommentsQuery } from "../../query/posts";
 import { getTodos } from "../../api";
 import { useEffect } from 'react';
 import { IoMdHeartEmpty } from "react-icons/io";
 import { MdDeleteOutline } from "react-icons/md";
 import { MdOutlineEdit } from "react-icons/md";
+import Comments from "../Comments/Comments";
 
 const Post = () => {
 
-  const { data, isLoading } = useGetAllCommentsQuery()
-  // useEffect(() => {
-  //   getTodos()
-  //     .then((tracks) => {
-  //       console.log(tracks)
-  //       // dispatch(getAllTracks(tracks))
-  //       // setTracks(tracks);
-  //     })
-  // }, [])
+  const { data, isLoading } = useGetAllPostsQuery();
+  const { currentData } = useGetAllUsersQuery();
+  // console.log(currentData)
+  // console.log(data)
 
+  // let cities = [{ id: 121, name: 'г. Урюпинск' }, { id: 122, name: 'г. Париж' }, { id: 123, name: 'г. Москва' }, { id: 124, name: 'г. Штормград' }];
+  // let searchTerm = 'г. Москва';
+  // let cityId = cities.find(city => city.name === searchTerm).id
+  // console.log(cityId);
 
-
-  // const { data } = useGetAllCommentsQuery()
-  console.log(data)
   return (
     <>
       {isLoading ? null : data.map((post) => {
@@ -42,11 +39,14 @@ const Post = () => {
             </div>
             <div key={post.id} className="post_main">
               <div className="post_header">
-                <p className="post_author" >Leanne Graham</p>
+                {currentData && <p className="post_author">
+                  {currentData.find(user => user.id === post.userId).name}
+                </p>}
                 <h3 className="post_title">{post.title}</h3>
                 <p className="post_text">{post.body}</p>
               </div>
               <button className="post_button-comments">Комментарии</button>
+              <Comments post={post}/>
             </div>
 
           </div>
