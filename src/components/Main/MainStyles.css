@@ -2,5 +2,6 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  background-color: #EDF5E1;
+  background-color: rgb(240, 240, 240);
+  ;
 }
