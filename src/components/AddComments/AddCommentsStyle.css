@@ -1,9 +1,16 @@
-.add-comments{
+.add__comments{
   background-color: rgb(189, 255, 193);
   border: 1px solid black;
-  height: 20px;
   margin: 20px 0px 20px 0px;
   padding: 5px;
+}
+.add__comments-button{
+  padding: 0;
+  border: none;
+  font: inherit;
+  color: inherit;
+  background-color: transparent;
+  cursor: pointer;
 }
 .text{
   color:black;

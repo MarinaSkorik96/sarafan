@@ -1,11 +1,15 @@
 import React from "react";
 import './AddCommentsStyle.css'
+import { TbSquareRoundedPlus } from "react-icons/tb";
 
 
 const AddComments = () => {
   return (
-    <div className="add-comments">
-      <p className="text">AddComments</p>
+    <div className="add__comments">
+      Добавить пост
+      <button className="add__comments-button">
+        <TbSquareRoundedPlus />
+      </button>
     </div>
   )
 }

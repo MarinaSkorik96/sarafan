@@ -6,7 +6,6 @@ import './PostsStyles.css'
 const Posts = () => {
   return (
     <div className="posts">
-      Posts
       <Post />
     </div>
   )
