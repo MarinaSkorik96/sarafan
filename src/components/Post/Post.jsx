@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import './PostStyles.css'
 import { useGetAllPostsQuery, useGetAllUsersQuery, useGetAllCommentsQuery } from "../../query/posts";
 import { getTodos } from "../../api";
@@ -9,21 +9,22 @@ import { MdOutlineEdit } from "react-icons/md";
 import Comments from "../Comments/Comments";
 
 const Post = () => {
+  const [postCommentsOn, setPostCommentsOn] = useState([])
+
 
   const { data, isLoading } = useGetAllPostsQuery();
   const { currentData } = useGetAllUsersQuery();
+  useEffect(() => {
+    console.log(postCommentsOn)
 
-  // let cities = [{ id: 121, name: 'г. Урюпинск' }, { id: 122, name: 'г. Париж' }, { id: 123, name: 'г. Москва' }, { id: 124, name: 'г. Штормград' }];
-  // let searchTerm = 'г. Москва';
-  // let cityId = cities.find(city => city.name === searchTerm).id
-  // console.log(cityId);
+  }, [postCommentsOn])
 
   return (
     <>
       {isLoading ? null : data.map((post) => {
         return (
-          <div>
-            <div className="post">
+          <>
+            <div className={postCommentsOn.includes(post.id)? "postD" : "post"}>
               <div className="post_side-bar">
                 <div className="post_side-like">
                   <IoMdHeartEmpty />
@@ -36,8 +37,8 @@ const Post = () => {
                 </div>
 
               </div>
-              <div key={post.id} className="post_main">
-                <>
+              <div className="post_block">
+                <div key={post.id} className="post_main">
                   <div className="post_header">
                     {currentData && <p className="post_author">
                       {currentData.find(user => user.id === post.userId).name}
@@ -45,13 +46,23 @@ const Post = () => {
                     <h3 className="post_title">{post.title}</h3>
                     <p className="post_text">{post.body}</p>
                   </div>
-                  <button className="post_button-comments">Комментарии</button>
-                </>
-                <Comments post={post} />
+                  <button className="post_button-comments" onClick={() => {
+                    if (postCommentsOn.includes(post.id)) {
+                      let postId = post.id
+                      setPostCommentsOn(postCommentsOn.filter((post) => post !== postId))
+                    } else {
+                      setPostCommentsOn([...postCommentsOn, post.id])
+                    }
+                  }}>
+                    {postCommentsOn.includes(post.id) ? <span>Скрыть комментарии</span> : <span>Комментарии</span>}
+                  </button>
+                </div>
+                {postCommentsOn.includes(post.id) ? <Comments post={post} /> : null}
+
 
               </div>
             </div>
-          </div>
+          </>
         )
 
       })}

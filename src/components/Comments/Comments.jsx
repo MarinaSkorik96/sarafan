@@ -12,10 +12,10 @@ const Comments = ({ post }) => {
 
   return (
     <div className="comments" >
-      {isLoading ? null : data.map((comment) => {
+      {isLoading ? <p>Подождите, комментарии загружаются</p> : data.map((comment) => {
         if (comment.postId === post.id) {
           return (
-            <div className="comment">
+            <div className="comment" key={comment.id}>
               <h4 className="comment_name">{comment.name}</h4>
               <p className="comment_email">{comment.email}</p>
               <p className="comment_body">{comment.body}</p>

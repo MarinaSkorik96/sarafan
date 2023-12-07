@@ -1,12 +1,14 @@
 .comments{
   /* background-color: red; */
-  border-top: 1px solid #05386b8a;
+  /* border-top: 1px solid #05386b8a; */
   display: flex;
   flex-direction: column;
+  overflow: scroll;
+  height: 380px;
 }
 
 .comment {
-  margin-top: 15px;
+  margin-top: 5px;
   display: flex;
   flex-direction: column;
   gap: 2px;
@@ -18,8 +20,11 @@
   border-bottom: none;
 }
 .comment_name {
+  font-weight: 500;
   text-align: justify;
   padding-left: 10px;
+  color: black;
+
 }
 .comment_email{
   padding-left: 10px;
