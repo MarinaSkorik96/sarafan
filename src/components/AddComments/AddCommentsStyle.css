@@ -1,8 +1,10 @@
 .add__comments{
-  background-color: rgb(189, 255, 193);
-  border: 1px solid black;
+  /* background-color: rgb(189, 255, 193); */
+  /* border: 1px solid black; */
   margin: 20px 0px 20px 0px;
   padding: 5px;
+  display: flex;
+  flex-direction: row;
 }
 .add__comments-button{
   padding: 0;
@@ -11,10 +13,106 @@
   color: inherit;
   background-color: transparent;
   cursor: pointer;
+  font-size: 32px;
+  font-weight: 600;
+  color: #05386B;
+  background: rgba(235, 240, 250);
+  border: 1px solid #05386B;
+  border-radius: 10px;
+  padding: 10px 15px 10px 15px;
+  display: block;
+  margin-left: 50px;
+  display: flex;
+  gap: 20px;
+  
 }
+
+.plus_box{
+  position: relative;
+  height: 37px;
+  width: 37px;
+  border: 3px solid #05386B;
+  border-radius: 16px;
+padding: 5px;
+box-sizing: border-box;
+}
+
+.add__comments-button_vertical{
+  position: absolute;
+  width: 5px;
+  height: 22px;
+  background: #05386B;
+  border-radius: 5px;
+  left: 13.5px;
+  display: inline;
+}
+
+.add__comments-button_horizontal{
+  position: absolute;
+  width: 22px;
+  height: 5px;
+  background: #05386B;
+  border-radius: 5px;
+  top: 13.5px;
+
+}
+
 .text{
   color:black;
   font-size: 14px;
   line-height: 24px;
+}
 
+.add_comment-form{
+  width: 500px;
+  height: 300px;
+  background-color: #ffffff;
+  border: 1px solid rgb(220, 225,230);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  padding: 2%;
+  gap: 10px;
+  position: absolute;
+  left: 40%;
+  top: 30%;
+}
+.background{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.393);
+  left: 0;
+}
+
+.add_comment_form-author{
+  width: 300px;
+  border: 1px solid #05386b8a;
+  border-radius: 10px;
+  padding: 5px 10px 5px 10px;
+  color:#05386B;
+  outline: none;
+  /* background-color: aquamarine; */
+}
+.add_comment_form-title,
+.add_comment_form-text{
+  padding: 10px;
+  resize:none;
+  border-radius: 8px;
+  border: 1px solid #05386b8a;
+  outline: none;
+}
+.add_comment_form-title::placeholder,
+.add_comment_form-text::placeholder{
+  color:rgb(220, 225,230)
+}
+
+.add_comment_form-button{
+  margin-top: 5px;
+  color: #05386B;
+  background: rgba(235, 240, 250);
+  border: none;
+  border-radius: 8px;
+  padding: 5px 10px 5px 10px;
 }

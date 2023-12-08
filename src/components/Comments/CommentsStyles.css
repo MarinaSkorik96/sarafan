@@ -1,6 +1,6 @@
 .comments{
   /* background-color: red; */
-  /* border-top: 1px solid #05386b8a; */
+  border-left: 1px solid #05386b8a;
   display: flex;
   flex-direction: column;
   overflow: scroll;
@@ -39,4 +39,5 @@
   color: black;
   font-size: 16px;
   text-align: justify;
+  padding-left: 10px;
 }
