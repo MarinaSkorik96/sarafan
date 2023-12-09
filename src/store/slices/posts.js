@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, unwrapResult } from "@reduxjs/toolkit";
 import { useGetAllUsersQuery } from "../../query/posts";
 // import { getFreshToken } from "../../store/slices/user";
 // import { useDispatch, useSelector } from "react-redux";
@@ -15,9 +15,9 @@ const getPostsSlace = createSlice({
   name: 'posts',
   initialState,
   reducers: {
-    getAllPosts(state, action){
+    getAllPosts(state, action) {
       // state.allPosts= [...action.payload].reverse()
-      state.allPosts= action.payload
+      state.allPosts = action.payload
     },
     currentUserToken(state, action) {
 
@@ -30,12 +30,17 @@ const getPostsSlace = createSlice({
     },
     addPost(state, action) {
       state.allPosts = [action.payload, ...state.allPosts]
+    },
+    deletePost(state, action) {
+      const {result} = action.payload
+      console.log(result)
+      state.allPosts = state.allPosts.filter((allPost) => allPost.id !== result.data.id)
     }
   },
 
 });
 
 
-export const {  getAllPosts, currentUserToken, currentUser, allUsers, addPost } = getPostsSlace.actions;
+export const { getAllPosts, currentUserToken, currentUser, allUsers, addPost, deletePost } = getPostsSlace.actions;
 
 export default getPostsSlace.reducer;

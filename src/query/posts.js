@@ -43,9 +43,17 @@ export const tracksApi = createApi({
       invalidatesTags: [
         { type: 'Posts', id: 'LIST' },
       ]
+    }),
+    getDeletePost : build.mutation({
+      query: ({postId}) => ({
+        url: `/posts/${postId}`
+      }),
+      // invalidatesTags: [
+      //   { type: 'Posts', id: 'LIST' },
+      // ]
     })
 
   })
 })
 
-export const { useGetAllPostsQuery, useGetAllUsersQuery, useGetAllCommentsQuery, useGetPostCommentsQuery, useGetAddNewPostMutation } = tracksApi
+export const { useGetAllPostsQuery, useGetAllUsersQuery, useGetAllCommentsQuery, useGetPostCommentsQuery, useGetAddNewPostMutation, useGetDeletePostMutation } = tracksApi

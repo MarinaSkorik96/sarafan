@@ -9,16 +9,18 @@ const Comments = ({ post }) => {
 
   return (
     <div className="comments" >
-      {isLoading ? <p>Подождите, комментарии загружаются</p> : 
+      {console.log(data)}
+      {isLoading ? <p>Подождите, комментарии загружаются</p> :
+      data.length == 0 ? <p>Пока нет ни одного комментария</p> : 
         data.map((comment) => {
-            return (
-              <div className="comment" key={comment.id}>
-                <h4 className="comment_name">{comment.name}</h4>
-                <p className="comment_email">{comment.email}</p>
-                <p className="comment_body">{comment.body}</p>
-              </div>
-            )
-        }) }
+          return (
+            <div className="comment" key={comment.id}>
+              <h4 className="comment_name">{comment.name}</h4>
+              <p className="comment_email">{comment.email}</p>
+              <p className="comment_body">{comment.body}</p>
+            </div>
+          )
+        })}
     </div>
   )
 }

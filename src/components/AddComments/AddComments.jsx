@@ -38,7 +38,7 @@ const AddComments = () => {
 
 
   const allUsers = useSelector(state => state.posts.allUsers)
-  console.log(allUsers)
+  // console.log(allUsers)
   return (
     <div className="add__comments">
       <button className="add__comments-button" onClick={() => setAddPostButtonOn(true)}>
