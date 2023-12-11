@@ -154,4 +154,46 @@
   padding: 5px 10px 5px 10px;
 }
 
+.edditing-buttons{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 30px;
+}
+
+
+.change_post-authore{
+  border: 1px solid #05386b8a;
+  border-radius: 10px;
+  padding: 5px 10px 5px 10px;
+  color:#05386B;
+  outline: none;
+  margin-bottom: 10px;
+  float: right;
+}
+
+.change_post-title{
+  margin-bottom: 10px;
+  font-size: 22px;
+  padding: 10px;
+  resize:none;
+  border-radius: 8px;
+  border: 1px solid #05386b8a;
+  outline: none;
+  width: 100%;
+  color: #05386B;
+  font-weight: bold;
+}
+
+.change_post-body{
+  margin-bottom: 10px;
+  font-size: 18px;
+  padding: 10px;
+  resize:none;
+  border-radius: 8px;
+  border: 1px solid #05386b8a;
+  outline: none;
+  width: 100%;
+}
+
 

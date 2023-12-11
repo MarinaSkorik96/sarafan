@@ -46,12 +46,14 @@ export const tracksApi = createApi({
     }),
     getDeletePost : build.mutation({
       query: ({postId}) => ({
-        url: `/posts/${postId}`
+        url: `/posts/${postId}`,
+        method: 'DELETE',
       }),
       // invalidatesTags: [
       //   { type: 'Posts', id: 'LIST' },
       // ]
-    })
+    }),
+    
 
   })
 })

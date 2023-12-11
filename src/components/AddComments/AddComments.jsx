@@ -9,11 +9,12 @@ import { getAllPosts } from "../../store/slices/posts";
 
 const AddComments = () => {
   const allPosts = useSelector(store => store.posts.allPosts)
+  const allUsers = useSelector(state => state.posts.allUsers)
 
   const [title, setTitle] = useState('')
   const [text, setText] = useState('')
   const [author, setAuthore] = useState([])
-  const [addPostDuttonOn, setAddPostButtonOn] = useState(false)
+  const [addPostButtonOn, setAddPostButtonOn] = useState(false)
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -37,7 +38,6 @@ const AddComments = () => {
   }
 
 
-  const allUsers = useSelector(state => state.posts.allUsers)
   // console.log(allUsers)
   return (
     <div className="add__comments">
@@ -52,7 +52,7 @@ const AddComments = () => {
       {/* <button className="add__comments-button">
 
       </button> */}
-      {addPostDuttonOn &&
+      {addPostButtonOn &&
         <div className="background">
           <div className="add_comment-form">
             <select className="add_comment_form-author" onChange={(e)=>setAuthore(e.target.value)}>
@@ -79,7 +79,6 @@ const AddComments = () => {
 
             }}>Добавить пост</button>
           </div>
-
         </div>
       }
     </div>
