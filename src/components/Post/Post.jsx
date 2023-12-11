@@ -21,6 +21,7 @@ const Post = () => {
   const [checkPosts, setCheckPots] = useState([])
   const [favoritesPosts, setFavoritesPosts] = useState([])
   const [actionWithPosts, setActionWithPosts] = useState("")
+  const [posToBeDeleted, setPosToBeDeleted] = useState()
   const numbersOfPostsDef = localStorage.getItem('quantity') ? localStorage.getItem('quantity') : 10;
   const [numbersOfPosts, setNumbersOfPosts] = useState(numbersOfPostsDef)
   let allPosts = useSelector(store => store.posts.allPosts)
@@ -39,6 +40,7 @@ const Post = () => {
   console.log(isSuccess)
 
   async function deletePostS(post) {
+
     const postId = post.id
     const result = await getDeletePost({ postId })
     dispatch(deletePost({ result }))
@@ -78,9 +80,11 @@ const Post = () => {
                     </div>
                   }
                   <div className={isLoading ? "post_side-block-loading" : "post_side-block"} onClick={(() => {
-                    if (isLoading !== true) {
-                      deletePostS(post)
-                    }
+                    setActionWithPosts('Удалить пост')
+                    setPosToBeDeleted(post)
+                    // if (isLoading !== true) {
+                    // deletePostS(post)
+                    // }
                   })}>
                     {/* {isLoading ? <MdOutlineAutoDelete /> : <MdDeleteOutline />} */}
                     <MdDeleteOutline />
@@ -143,17 +147,21 @@ const Post = () => {
           <div className="add_comment-form">
             <p>Подтвердите действие</p>
             <button className="add_comment_form-button" onClick={() => {
-              if (actionWithPosts === "Добавить в избранное") {
+              if (actionWithPosts === "Добавить в избранное ") {
                 setFavoritesPosts([...favoritesPosts, ...checkPosts]);
-              } else if (actionWithPosts === "Удалить") {
+              } else if (actionWithPosts === "Удалить ") {
                 checkPosts.forEach((post) => {
                   deletePostS(post)
                 })
+              } else if (actionWithPosts === "Удалить пост ") {
+                deletePostS({posToBeDeleted})
               }
               setCheckPots([])
               setActionWithPosts("")
-            }}>{actionWithPosts} {checkPosts.length} {checkPosts.length === 1 ?
-              "пост" : checkPosts.length < 5  ? 'поста' : 'постов'} </button>
+            }}>
+              {actionWithPosts}
+              {actionWithPosts === "Удалить пост" ? null : checkPosts.length === 1 ? ` ${checkPosts.length} пост` : checkPosts.length < 5 ? ` ${checkPosts.length} поста` : ` ${checkPosts.length} постов`}
+            </button>
             <button className="add_comment_form-button" onClick={() => {
               setActionWithPosts("")
             }}>Отменить</button>
