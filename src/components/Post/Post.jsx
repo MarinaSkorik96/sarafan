@@ -12,7 +12,7 @@ import { MdOutlineCheckBoxOutlineBlank } from "react-icons/md";
 import { MdOutlineAutoDelete } from "react-icons/md";
 import Comments from "../Comments/Comments";
 import { useDispatch, useSelector } from "react-redux";
-import { allPosts, allUsers, deletePost, getAllPosts, getDeletePost } from "../../store/slices/posts";
+import { allPosts, allUsers, deletePost, getAllPosts, getChangePost, getDeletePost } from "../../store/slices/posts";
 import { TbCoinRupee, TbColumnInsertLeft } from "react-icons/tb";
 
 const Post = () => {
@@ -25,6 +25,8 @@ const Post = () => {
   const [actionWithPosts, setActionWithPosts] = useState("")
   const [postToBeDeleted, setPostToBeDeleted] = useState()
   const [postEditing, setPostEditing] = useState(false)
+  const [loading, setLoading] = useState(false)
+
   const [numbersOfPosts, setNumbersOfPosts] = useState(numbersOfPostsDef)
   const [title, setTitle] = useState('')
   const [text, setText] = useState('')
@@ -58,36 +60,39 @@ const Post = () => {
   // console.log(isError)
   // console.log(isSuccess)
 
-   async function deletePostS(postToBeDeleted) {
-    const r = await dispatch(getDeletePost(postToBeDeleted))
-    // console.log(postToBeDeleted)
-    console.log(r.meta.requestStatus)
-    if(r.meta.requestStatus === 'rejected'){
-      alert (r.meta.requestStatus )
-      return <div>Ошибка</div>
-    }
-    console.log(r)
-    console.log(allPosts)
-    // const postId = postToBeDeleted.id
-    // console.log(getDeletePost({ postId }))
-    // // console.log(isSuccess)
+  // async function deletePostS(postToBeDeleted) {
+  //   const result = await dispatch(getDeletePost(postToBeDeleted))
+  //   // console.log(postToBeDeleted)
+  //   console.log(result.meta.requestStatus)
+  //   if (result.meta.requestStatus === 'pending') {
+  //     setLoading(true)
+  //   }
+
+  //   if (result.meta.requestStatus === 'rejected') {
+  //     alert('Ошибка удаления, попробуйте позже')
+  //   }
+  //   // console.log(r)
+  //   // console.log(allPosts)
+  //   // const postId = postToBeDeleted.id
+  //   // console.log(getDeletePost({ postId }))
+  //   // // console.log(isSuccess)
 
 
-    // getDeletePost({ postId })
+  //   // getDeletePost({ postId })
 
-    //   // console.log(ddd),
-    //   // console.log(isLoading)
-    //   // console.log(isError)
-    //   // console.log(isSuccess)
-    //   if (result.status === 'fulfilled') {
-    //     console.log(4)
+  //   //   // console.log(ddd),
+  //   //   // console.log(isLoading)
+  //   //   // console.log(isError)
+  //   //   // console.log(isSuccess)
+  //   //   if (result.status === 'fulfilled') {
+  //   //     console.log(4)
 
-    //   }
+  //   //   }
 
-    
-    // console.log(isSuccess)
 
-  }
+  //   // console.log(isSuccess)
+
+  // }
 
   const saveNumberOfPosts = (n) => {
     setNumbersOfPosts(n)
@@ -103,7 +108,7 @@ const Post = () => {
   }, [postsData])
 
 
-  console.log(allPosts)
+  // console.log(allPosts)
 
   return (
 
@@ -129,7 +134,7 @@ const Post = () => {
                   }
 
                   {/* Удаление */}
-                  <div className={"post_side-block"} onClick={(() => {
+                  <div className={loading ? "post_side-block-loading" : "post_side-block"} onClick={(() => {
                     setActionWithPosts('Удалить пост')
                     setPostToBeDeleted(post)
                   })}>
@@ -142,6 +147,7 @@ const Post = () => {
                     setPostToBeDeleted(post)
                     setTitle(post.title)
                     setText(post.body)
+
                   }}>
                     <MdOutlineEdit />
                   </div>
@@ -202,7 +208,13 @@ const Post = () => {
                     </div>
                     {postEditing === true && postToBeDeleted === post ?
                       <div className="edditing-buttons">
-                        <button className="post_button-comments">Сохранить</button>
+                        <button className="post_button-comments" onClick={() => {
+                          console.log(4)
+                          setPostEditing(false)
+                          const index = allPosts.indexOf(postToBeDeleted)
+                          dispatch(getChangePost({ postToBeDeleted, index, title, text }))
+
+                        }}>Сохранить</button>
                         <button className="post_button-comments">Отменить</button>
                       </div>
                       :
@@ -247,10 +259,11 @@ const Post = () => {
                 setFavoritesPosts([...favoritesPosts, ...checkPosts]);
               } else if (actionWithPosts === "Удалить") {
                 checkPosts.forEach((post) => {
-                  deletePostS(post)
+                  dispatch(getDeletePost(post))
                 })
               } else if (actionWithPosts === "Удалить пост") {
-                deletePostS(postToBeDeleted)
+                console.log(postToBeDeleted)
+                dispatch(getDeletePost(postToBeDeleted))
               }
               if (actionWithPosts !== "Удалить пост") {
                 setCheckPots([])
