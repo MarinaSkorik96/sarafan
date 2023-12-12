@@ -12,7 +12,7 @@ import { MdOutlineCheckBoxOutlineBlank } from "react-icons/md";
 import { MdOutlineAutoDelete } from "react-icons/md";
 import Comments from "../Comments/Comments";
 import { useDispatch, useSelector } from "react-redux";
-import { allPosts, allUsers, deletePost, getAllPosts, getChangePost, getDeletePost } from "../../store/slices/posts";
+import { allPosts, getAllUsers, deletePost, getAllPosts, getChangePost, getDeletePost } from "../../store/slices/posts";
 import { TbCoinRupee, TbColumnInsertLeft } from "react-icons/tb";
 
 const Post = () => {
@@ -30,76 +30,22 @@ const Post = () => {
   const [numbersOfPosts, setNumbersOfPosts] = useState(numbersOfPostsDef)
   const [title, setTitle] = useState('')
   const [text, setText] = useState('')
-
-
-
-  let allPosts = useSelector(store => store.posts.allPosts)
-  const allUserss = useSelector(state => state.posts.allUsers)
-
-
-  // useEffect(() => {
-  //   console.log(title)
-  //   console.log(text)
-  // }, [title, text])
-
+  const { allPosts, allUsers, status } = useSelector(state => state.posts)
 
   useEffect(() => {
     console.log(favoritesPosts)
   }, [favoritesPosts])
   const { data: postsData, isLoading: postsLoading } = useGetAllPostsQuery(numbersOfPosts);
   const { data: users } = useGetAllUsersQuery();
-  // const [getDeletePost, result] = useGetDeletePostMutation();
-  // console.log(result)
 
-  // useEffect(()=>{
-  //   if (result.isSuccess === true) {
-  //     dispatch(deletePost( {postToBeDeleted }))
-  //   }
-  // },[result])
-  // console.log(isLoading)
-  // console.log(isError)
-  // console.log(isSuccess)
-
-  // async function deletePostS(postToBeDeleted) {
-  //   const result = await dispatch(getDeletePost(postToBeDeleted))
-  //   // console.log(postToBeDeleted)
-  //   console.log(result.meta.requestStatus)
-  //   if (result.meta.requestStatus === 'pending') {
-  //     setLoading(true)
-  //   }
-
-  //   if (result.meta.requestStatus === 'rejected') {
-  //     alert('Ошибка удаления, попробуйте позже')
-  //   }
-  //   // console.log(r)
-  //   // console.log(allPosts)
-  //   // const postId = postToBeDeleted.id
-  //   // console.log(getDeletePost({ postId }))
-  //   // // console.log(isSuccess)
-
-
-  //   // getDeletePost({ postId })
-
-  //   //   // console.log(ddd),
-  //   //   // console.log(isLoading)
-  //   //   // console.log(isError)
-  //   //   // console.log(isSuccess)
-  //   //   if (result.status === 'fulfilled') {
-  //   //     console.log(4)
-
-  //   //   }
-
-
-  //   // console.log(isSuccess)
-
-  // }
-
+  // Сохранение выбора колличества постов
   const saveNumberOfPosts = (n) => {
     setNumbersOfPosts(n)
     localStorage.setItem('quantity', n);
   }
+
   useEffect(() => {
-    dispatch(allUsers(users))
+    dispatch(getAllUsers(users))
   }, [users])
   useEffect(() => {
     if (postsData) {
@@ -107,11 +53,28 @@ const Post = () => {
     }
   }, [postsData])
 
+// Удаление поста
+  const deletePost = async (postToBeDeleted) => {
+    dispatch(getDeletePost(postToBeDeleted)).then((result) => {
+      if (result.meta.requestStatus === "rejected") {
+        alert('Ошибка удаления поста, попробуйте позже')
+      }
+    })
+  }
 
-  // console.log(allPosts)
+  // Изменение поста
+  const changePost = async (postToBeDeleted) => {
+    const index = allPosts.indexOf(postToBeDeleted)
+    dispatch(getChangePost({ postToBeDeleted, index, title, text })).then((result) => {
+      if (result.meta.requestStatus === "fulfilled") {
+        setPostEditing(false)
+      } else if (result.meta.requestStatus === "rejected") {
+        alert('Ошибка отправки изменения, попробуйте позже')
+      }
+    })
+  }
 
   return (
-
     <>
       <>
         {postsLoading ? <p>Подождите, посты загружаются...</p> : allPosts.map((post) => {
@@ -134,10 +97,12 @@ const Post = () => {
                   }
 
                   {/* Удаление */}
-                  <div className={loading ? "post_side-block-loading" : "post_side-block"} onClick={(() => {
-                    setActionWithPosts('Удалить пост')
-                    setPostToBeDeleted(post)
-                  })}>
+                  <div
+                    className="post_side-block"
+                    onClick={(() => {
+                      setActionWithPosts('Удалить пост')
+                      setPostToBeDeleted(post)
+                    })}>
                     <MdDeleteOutline />
                   </div>
 
@@ -171,7 +136,7 @@ const Post = () => {
                       {postEditing === true && postToBeDeleted === post ?
                         <>
                           <select className="change_post-authore" >
-                            {allUserss ? allUserss.map((user) => {
+                            {allUsers ? allUsers.map((user) => {
                               return (
                                 <option
                                   key={user.id}
@@ -206,16 +171,23 @@ const Post = () => {
                         </>
                       }
                     </div>
+
+                    {/* Нижние кнопки поста */}
                     {postEditing === true && postToBeDeleted === post ?
                       <div className="edditing-buttons">
-                        <button className="post_button-comments" onClick={() => {
-                          console.log(4)
-                          setPostEditing(false)
-                          const index = allPosts.indexOf(postToBeDeleted)
-                          dispatch(getChangePost({ postToBeDeleted, index, title, text }))
-
-                        }}>Сохранить</button>
-                        <button className="post_button-comments">Отменить</button>
+                        <button
+                          className="post_button-comments"
+                          disabled={status === "loading" ? true : false}
+                          onClick={() => {
+                            changePost(postToBeDeleted)
+                            // }
+                          }}>Сохранить</button>
+                        <button
+                          className="post_button-comments"
+                          onClick={() => {
+                            setPostEditing(false)
+                          }}
+                        >Отменить</button>
                       </div>
                       :
                       <button className="post_button-comments" onClick={() => {
@@ -262,8 +234,9 @@ const Post = () => {
                   dispatch(getDeletePost(post))
                 })
               } else if (actionWithPosts === "Удалить пост") {
-                console.log(postToBeDeleted)
-                dispatch(getDeletePost(postToBeDeleted))
+                deletePost(postToBeDeleted)
+                // console.log(postToBeDeleted)
+                // dispatch(getDeletePost(postToBeDeleted))
               }
               if (actionWithPosts !== "Удалить пост") {
                 setCheckPots([])

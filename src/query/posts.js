@@ -26,36 +26,8 @@ export const tracksApi = createApi({
     }),
     getPostComments: build.query({
       query: (post) => `/post/${post}/comments`,
-    }),
-    getAddNewPost: build.mutation({
-      query: ({ title, text }) => ({
-        url: `/posts`,
-        method: 'POST',
-        body: JSON.stringify({
-          title: title,
-          body: text,
-          userId: 1,
-        }),
-        headers: {
-          'Content-type': 'application/json; charset=UTF-8',
-        },
-      }),
-      invalidatesTags: [
-        { type: 'Posts', id: 'LIST' },
-      ]
-    }),
-    getDeletePost : build.mutation({
-      query: ({postId}) => ({
-        url: `/posts/${postId}`,
-        method: 'DELETE',
-      }),
-      // invalidatesTags: [
-      //   { type: 'Posts', id: 'LIST' },
-      // ]
-    }),
-    
-
+    })
   })
 })
 
-export const { useGetAllPostsQuery, useGetAllUsersQuery, useGetAllCommentsQuery, useGetPostCommentsQuery, useGetAddNewPostMutation, useGetDeletePostMutation } = tracksApi
+export const { useGetAllPostsQuery, useGetAllUsersQuery, useGetAllCommentsQuery, useGetPostCommentsQuery} = tracksApi
