@@ -11,8 +11,14 @@
   border: 2px solid black;
   display: flex;
   flex-direction: row;
-
 }
 
+button:hover {
+  background-color:rgb(203, 219, 249);
+}
+
+button:active{
+  background-color:rgb(161, 192, 248);
+}
 
 

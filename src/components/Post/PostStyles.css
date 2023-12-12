@@ -82,8 +82,21 @@
   padding-bottom: 1px;
 }
 
+.post_side-block:hover{
+  background-color:rgb(203, 219, 249);
+}
+
+.post_side-block:active{
+  background-color:rgb(161, 192, 248);
+}
+
+
 .post_side-block-active{
-  background: rgb(187, 203, 218);
+  background: rgb(203, 219, 249);
+}
+
+.post_side-block-active:hover{
+  background: rgb(161, 192, 248);
 }
 
 .post_side-block-loading{

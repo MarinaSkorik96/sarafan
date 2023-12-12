@@ -1,0 +1,131 @@
+.filters{
+  display: flex;
+  flex-direction: row;
+  margin: 20px;
+  margin-left: 50px;
+  justify-content: space-between;
+}
+
+.filters_block{
+  display: flex;
+  gap: 15px;
+  position: relative;
+
+}
+
+.filter { 
+  padding: 5px;
+  padding-left: 15px;
+  border-radius: 15px;
+  width: 180px;
+  font-size: 22px;
+  font-weight: 400;
+  text-align: start;
+  color: #05386B;
+  background-color: rgb(243, 246, 254);
+  border: 1px solid #05386B;
+  box-shadow:  0 0 3px #05386B;
+}
+
+.filter-active{
+  padding: 5px;
+  padding-left: 15px;
+  border-radius: 15px;
+  width: 180px;
+  font-size: 22px;
+  font-weight: 400;
+  text-align: start;
+  color: #05386B;
+  background-color: rgb(203, 219, 249);
+  border: 1px solid #05386B;
+  box-shadow:  0 0 3px #05386B;
+
+}
+
+.name_filter,
+.authore_filter,
+.likes_filter,
+.sort_filter{
+  background-color: rgb(243, 246, 254); 
+  border: 1px solid #05386B;
+  box-shadow:  0 0 3px #05386B;
+  width: 250px;
+  /* height: 50px; */
+  position: absolute;
+  border-radius: 20px;
+  top: 45px;
+  list-style-type: none;
+  text-align: start;
+  padding: 10px;
+}
+
+.authore_filter{
+  left: 194px;
+}
+
+.authore_filter-lenght{
+  width: 26px;
+  height: 26px;
+  border-radius: 13px;
+  background: #3a6b9d;;
+  position: absolute;
+  color: #FFF;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 13px;
+  text-align: center;
+  padding-top: 6.5px;
+  top: 5px;
+  left: 340px;
+}
+
+.likes_filter{
+  left: 389px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+}
+
+
+.name_filter-input{
+  background: transparent;
+  border: none;
+  outline: none;
+}
+
+.filter-li{
+  font-size: 18px;
+  color: black;
+}
+
+.filter-li-a{
+  font-size: 18px;
+  color: black;
+  font-weight: 700;
+}
+
+.filter-li:hover{
+  font-weight: 700;
+}
+
+.sort_filter_button{
+  width: 230px;
+}
+
+.sort_filter{
+
+  right: 22px;
+  top: 178px;
+}
+
+.authore_filter-list,
+.sort_filter-list{
+  overflow: scroll;
+  overflow-y: scroll;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}

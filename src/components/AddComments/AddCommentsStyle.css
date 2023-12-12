@@ -15,23 +15,27 @@
   cursor: pointer;
   font-size: 32px;
   font-weight: 600;
-  color: #05386B;
-  background: rgba(235, 240, 250);
-  border: 1px solid #05386B;
-  border-radius: 10px;
+  color: rgb(243, 246, 254);
+  background: #3a6b9d;
+  border: 2px solid #05386B;
+  border-radius: 20px;
   padding: 10px 15px 10px 15px;
   display: block;
   margin-left: 50px;
   display: flex;
   gap: 20px;
-  
+}
+
+.add__comments-button:hover{
+  background: #05386B;
+
 }
 
 .plus_box{
   position: relative;
   height: 37px;
   width: 37px;
-  border: 3px solid #05386B;
+  border: 3px solid rgb(243, 246, 254);
   border-radius: 16px;
   padding: 5px;
   box-sizing: border-box;
@@ -41,7 +45,7 @@
   position: absolute;
   width: 5px;
   height: 22px;
-  background: #05386B;
+  background: rgb(243, 246, 254);
   border-radius: 5px;
   left: 13.5px;
   display: inline;
@@ -51,7 +55,7 @@
   position: absolute;
   width: 22px;
   height: 5px;
-  background: #05386B;
+  background: rgb(243, 246, 254);
   border-radius: 5px;
   top: 13.5px;
 }

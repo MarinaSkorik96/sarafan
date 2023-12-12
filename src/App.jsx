@@ -5,7 +5,7 @@ import {SideBar} from './components/SideBar/SideBar.jsx';
 function App() {
   return (
     <div className="App">
-      <SideBar/>
+      {/* <SideBar/> */}
       <Main/>
     </div>
   );
