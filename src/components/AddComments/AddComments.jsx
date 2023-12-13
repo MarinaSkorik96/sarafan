@@ -17,6 +17,7 @@ const AddComments = () => {
   const [emptyInputTitle, setEmptyInputTitle] = useState(false)
   const [emptyInputText, setEmptyInputText] = useState(false)
   const dispatch = useDispatch()
+  console.log(author)
 
   const addPost = async () => {
     if (title === "" && text === "") {
@@ -27,7 +28,9 @@ const AddComments = () => {
     } else if (text === "") {
       setEmptyInputText(true)
     } else {
-      dispatch(getAddNewPost({ title, text })).then((result) => {
+      const userId = allUsers.find((user) => user.name === author).id
+      console.log(userId)
+      dispatch(getAddNewPost({ title, text, userId })).then((result) => {
         if (result.meta.requestStatus === "rejected") {
           alert('Ошибка добавления поста, попробуйте позже')
         } else if (result.meta.requestStatus === "fulfilled") {
@@ -52,6 +55,7 @@ const AddComments = () => {
       <button className="add__comments-button" onClick={() => {
         setAddPostButtonOn(true)
         setClosingClarificationWindow(false)
+        setAuthore(allUsers[0].name)
       }}>
         <p>Добавить пост...</p>
         <div className="plus_box">
@@ -90,10 +94,10 @@ const AddComments = () => {
               }}
             />
             <textarea
-              className={emptyInputText ? "add_comment_form-text-empty": "add_comment_form-text"}
+              className={emptyInputText ? "add_comment_form-text-empty" : "add_comment_form-text"}
               rows="5"
               placeholder="Текст"
-              onChange={(e) =>{
+              onChange={(e) => {
                 setText(e.target.value)
                 setEmptyInputText(false)
               }}
@@ -122,7 +126,7 @@ const AddComments = () => {
                   // add()
                   addPost()
                 }}
-              disabled={status === "loading" ? true : false}
+                disabled={status === "loading" ? true : false}
               >Добавить пост</button>}
           </div>
         </div>

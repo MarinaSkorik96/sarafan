@@ -12,8 +12,9 @@ import { MdOutlineCheckBoxOutlineBlank } from "react-icons/md";
 import { MdOutlineAutoDelete } from "react-icons/md";
 import Comments from "../Comments/Comments";
 import { useDispatch, useSelector } from "react-redux";
-import { allPosts, getAllUsers, deletePost, getAllPosts, getChangePost, getDeletePost } from "../../store/slices/posts";
+import { allPosts, getAllUsers, deletePost, getAllPosts, getChangePost, getDeletePost, getLikedPosts } from "../../store/slices/posts";
 import { TbCoinRupee, TbColumnInsertLeft } from "react-icons/tb";
+import { Render } from "../Rerender/Rerender";
 
 const Post = () => {
   const dispatch = useDispatch();
@@ -26,15 +27,38 @@ const Post = () => {
   const [postToBeDeleted, setPostToBeDeleted] = useState()
   const [postEditing, setPostEditing] = useState(false)
   const [loading, setLoading] = useState(false)
-
   const [numbersOfPosts, setNumbersOfPosts] = useState(numbersOfPostsDef)
   const [title, setTitle] = useState('')
   const [text, setText] = useState('')
-  const { allPosts, allUsers, status } = useSelector(state => state.posts)
+  const [changedUser, setChangedUser] = useState("")
+  console.log(changedUser)
+  const {
+    allPosts,
+    allUsers,
+    status,
+    filteredPosts,
+    filtersActive,
+    filterAuthorsArr,
+    likedPosts,
+    filterLikes
+  } = useSelector(state => state.posts)
 
-  useEffect(() => {
-    console.log(favoritesPosts)
-  }, [favoritesPosts])
+
+  // useEffect(()=>{
+  //   const userId = allUsers.find((user) => user.name === changedUser)
+  //   console.log(userId)
+
+  // },[changedUser])
+  // console.log(allUsers)
+  // console.log(filteredPosts)
+  // console.log(filterLikes)
+  // console.log(filteredPosts)
+
+
+  const posts = filtersActive ? filteredPosts : allPosts
+
+
+
   const { data: postsData, isLoading: postsLoading } = useGetAllPostsQuery(numbersOfPosts);
   const { data: users } = useGetAllUsersQuery();
 
@@ -44,16 +68,21 @@ const Post = () => {
     localStorage.setItem('quantity', n);
   }
 
+  // useEffect(() => {
+  //   // console.log(favoritesPosts)
+  // }, [favoritesPosts])
+
+  // useEffect(() => {
+  // }, [users])
   useEffect(() => {
     dispatch(getAllUsers(users))
-  }, [users])
-  useEffect(() => {
+    dispatch(getLikedPosts(favoritesPosts))
     if (postsData) {
       dispatch(getAllPosts(postsData))
     }
-  }, [postsData])
+  }, [postsData, favoritesPosts, users])
 
-// Удаление поста
+  // Удаление поста
   const deletePost = async (postToBeDeleted) => {
     dispatch(getDeletePost(postToBeDeleted)).then((result) => {
       if (result.meta.requestStatus === "rejected") {
@@ -65,7 +94,9 @@ const Post = () => {
   // Изменение поста
   const changePost = async (postToBeDeleted) => {
     const index = allPosts.indexOf(postToBeDeleted)
-    dispatch(getChangePost({ postToBeDeleted, index, title, text })).then((result) => {
+    const userId = allUsers.find((user) => user.name === changedUser).id
+    console.log(userId)
+    dispatch(getChangePost({ postToBeDeleted, index, title, text, userId })).then((result) => {
       if (result.meta.requestStatus === "fulfilled") {
         setPostEditing(false)
       } else if (result.meta.requestStatus === "rejected") {
@@ -77,7 +108,7 @@ const Post = () => {
   return (
     <>
       <>
-        {postsLoading ? <p>Подождите, посты загружаются...</p> : allPosts.map((post) => {
+        {postsLoading ? <p>Подождите, посты загружаются...</p> : posts.map((post) => {
           return (
             <>
               <div className={postCommentsOn.includes(post.id) ? "postD" : "post"}>
@@ -86,12 +117,14 @@ const Post = () => {
                 <div className="post_side-bar">
 
                   {/* Избранное */}
-                  {favoritesPosts.includes(post) ?
-                    <div className="post_side-block post_side-block-active" onClick={() => { setFavoritesPosts(favoritesPosts.filter((checkPost) => checkPost !== post)) }}>
+                  {favoritesPosts.includes(post.id) ?
+                    <div className="post_side-block post_side-block-active" onClick={() => {
+                      setFavoritesPosts(favoritesPosts.filter((checkPost) => checkPost !== post.id))
+                    }}>
                       <IoHeart />
                     </div>
                     :
-                    <div className="post_side-block " onClick={() => { setFavoritesPosts([...favoritesPosts, post]) }}>
+                    <div className="post_side-block " onClick={() => { setFavoritesPosts([...favoritesPosts, post.id]) }}>
                       <IoMdHeartEmpty />
                     </div>
                   }
@@ -112,6 +145,7 @@ const Post = () => {
                     setPostToBeDeleted(post)
                     setTitle(post.title)
                     setText(post.body)
+                    setChangedUser( users.find(user => user.id === post.userId).name)
 
                   }}>
                     <MdOutlineEdit />
@@ -135,7 +169,9 @@ const Post = () => {
 
                       {postEditing === true && postToBeDeleted === post ?
                         <>
-                          <select className="change_post-authore" >
+                          <select className="change_post-authore"
+                            onChange={(e) => setChangedUser(e.target.value)}
+                          >
                             {allUsers ? allUsers.map((user) => {
                               return (
                                 <option
@@ -161,6 +197,7 @@ const Post = () => {
                             {postToBeDeleted.body}
                           </textarea>
                         </>
+                        // <Render/>
                         :
                         <>
                           {users && <p className="post_author">

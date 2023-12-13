@@ -1,19 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import './FiltersStyles.css'
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getFilter } from "../../store/slices/posts";
 
 const Filters = () => {
-
+  const dispatch = useDispatch()
   const [filter, setFilter] = useState("")
   const [filterTitle, setFilterTitle] = useState("")
   const [filterText, setFilterText] = useState("По названию")
   const [filterLikes, setFilterLikes] = useState("Все")
   const [filterSort, setFilterSort] = useState("Сначала первые")
-  const [filterAuthors, setFilterAuthors] = useState([])
-  const sortArray = ['Сначала первые', 'Сначала последние', 'По имени A-Z', 'По имени Z-A', 'По названию A-Z', 'По названию Z-A', 'Избранные сначала', 'Избранные в конце']
+  const [filterAuthorsArr, setFilterAuthorsArr] = useState([])
+  const sortArray = ['Сначала первые', 'Сначала последние', 'По имени автора A-Z', 'По имени автора Z-A', 'По названию A-Z', 'По названию Z-A', 'Избранные сначала', 'Избранные в конце']
 
-  console.log(filterTitle)
   const { allUsers } = useSelector(state => state.posts)
+
+  // console.log(filter)
+  useEffect(() => {
+    dispatch(getFilter({ filterTitle, filterAuthorsArr, filterLikes, filterSort }))
+  }, [filterTitle, filterAuthorsArr, filterLikes, filterSort])
 
   // console.log(filter)
   const clickOnFilter = (f) => {
@@ -29,10 +34,10 @@ const Filters = () => {
   }
 
   const authorsFilterArr = (name) => {
-    if (filterAuthors.includes(name)) {
-      setFilterAuthors(filterAuthors.filter((filter) => filter !== name))
+    if (filterAuthorsArr.includes(name)) {
+      setFilterAuthorsArr(filterAuthorsArr.filter((filter) => filter !== name))
     } else {
-      setFilterAuthors([...filterAuthors, name])
+      setFilterAuthorsArr([...filterAuthorsArr, name])
     }
   }
 
@@ -61,18 +66,21 @@ const Filters = () => {
               type="text"
               placeholder="Найти по нозванию"
               value={filterTitle}
-              onChange={(e) => { setFilterTitle(e.target.value) }}
+              onChange={(e) => {
+                setFilterTitle(e.target.value)
+                console.log(filterTitle)
+              }}
             />
           </div>
         }
 
         {/* Фильтр по автору */}
         <button
-          className={filterAuthors.length !== 0 ? "filter-active" : "filter"}
+          className={filterAuthorsArr.length !== 0 ? "filter-active" : "filter"}
           onClick={() => clickOnFilter('По автору')}
         >По автору</button>
 
-        {filterAuthors.length !== 0 ? <div className="authore_filter-lenght">{filterAuthors.length}</div> : null}
+        {filterAuthorsArr.length !== 0 ? <div className="authore_filter-lenght">{filterAuthorsArr.length}</div> : null}
 
         {
           filter === 'По автору' &&
@@ -81,9 +89,9 @@ const Filters = () => {
               {allUsers.map((user) => {
                 return (
                   <li
-                    className={filterAuthors.includes(user.name) ? "filter-li-a" : "filter-li"}
+                    className={filterAuthorsArr.includes(user.id) ? "filter-li-a" : "filter-li"}
                     key={user.id}
-                    onClick={() => { authorsFilterArr(user.name) }}
+                    onClick={() => { authorsFilterArr(user.id) }}
                   >{user.name}</li>
                 )
               })}
