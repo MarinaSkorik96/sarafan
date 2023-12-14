@@ -1,23 +1,25 @@
 .post{
   display: flex;
   flex-direction: row;
-  flex-grow: 0.5;
+  width:49%;  
 }
 .postD{
-  grid-column: span 2;
+  /* grid-column: span 2; */
   display: flex;
   flex-direction: row;
   flex-grow: 1;
+  width: 100%;
 }
 
 .post_block {
   background-color: #ffffff;
   border-radius: 10px;
   border: 1px solid rgb(220, 225,230);
-  display: flex;
-  flex-direction: row;
+  /* display: flex; */
+  /* flex-direction: column; */
   padding: 10px;
-  gap: 10px;
+  /* gap: 10px; */
+  width: 100%;
 }
 
 .post_main {
@@ -26,9 +28,18 @@
   /* min-width: 200px;
   max-width: 800px;
   width: 500px; */
+  align-items: stretch;
   gap: 10px;
   justify-content: space-between;
-  align-items: flex-end;
+  /* align-items: flex-end; */
+  background-color: #ffffff;
+  border-radius: 10px;
+  border: 1px solid rgb(220, 225,230);
+  /* display: flex; */
+  /* flex-direction: column; */
+  padding: 10px;
+  /* gap: 10px; */
+  width: 100%;
 }
 
 .post_side-bar{
@@ -62,6 +73,9 @@
   border: none;
   border-radius: 8px;
   padding: 5px 10px 5px 10px;
+  width: 200px;
+  margin: auto 0 0 auto;
+  /* margin-left: auto; */
 }
 
 .post_button-comments:disabled{
@@ -146,7 +160,7 @@
   background-color: rgba(0, 0, 0, 0.393);
   left: 0;
 }
-.add_comment-form{
+.confirm_action{
   width: 500px;
   height: 300px;
   background-color: #ffffff;
@@ -157,10 +171,10 @@
   padding: 2%;
   gap: 10px;
   position: absolute;
-  left: 40%;
-  top: 30%;
+  left: calc(50% - 250px);
+  top: calc(40% - 150px);
 }
-.add_comment_form-button{
+.confirm_action-button{
   margin-top: 5px;
   color: #05386B;
   background: rgba(235, 240, 250);

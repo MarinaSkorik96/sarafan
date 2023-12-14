@@ -1,14 +1,14 @@
 .comments{
-  /* background-color: red; */
-  border-left: 1px solid #05386b8a;
+  border-top: 1px solid #05386b8a;
   display: flex;
   flex-direction: column;
   overflow: scroll;
-  height: 380px;
+  max-height: 380px;
+  padding-top: 5px;
 }
 
 .comment {
-  margin-top: 5px;
+  margin-top: 10px;
   display: flex;
   flex-direction: column;
   gap: 2px;

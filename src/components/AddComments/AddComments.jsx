@@ -1,13 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import './AddCommentsStyle.css'
 import { useDispatch, useSelector } from "react-redux";
-import { useGetAddNewPostMutation } from "../../query/posts";
-import { addPost, getTodos } from "../../api";
-import { getAddNewPost, getAllPosts } from "../../store/slices/posts";
+import { getAddNewPost} from "../../store/slices/posts";
 
 
 const AddComments = () => {
-  const { allPosts, allUsers, status } = useSelector(state => state.posts)
+  const { allUsers, status } = useSelector(state => state.posts)
 
   const [title, setTitle] = useState('')
   const [text, setText] = useState('')
@@ -17,7 +15,6 @@ const AddComments = () => {
   const [emptyInputTitle, setEmptyInputTitle] = useState(false)
   const [emptyInputText, setEmptyInputText] = useState(false)
   const dispatch = useDispatch()
-  console.log(author)
 
   const addPost = async () => {
     if (title === "" && text === "") {
@@ -48,8 +45,6 @@ const AddComments = () => {
     }
   }
 
-
-  // console.log(allUsers)
   return (
     <div className="add__comments">
       <button className="add__comments-button" onClick={() => {
@@ -64,11 +59,9 @@ const AddComments = () => {
         </div>
 
       </button>
-      {/* <button className="add__comments-button">
 
-      </button> */}
       {addPostButtonOn &&
-        <div className="background">
+        <div className="add_comment-background">
           <div className="add_comment-form">
             <button
               className="close_button"

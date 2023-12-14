@@ -57,103 +57,104 @@ const Filters = () => {
               setFilterText('По названию')
             }
           }}
-        >{filterText}</button>
-        {
-          filter === 'По названию' &&
-          <div className="name_filter">
-            <input
-              className="name_filter-input"
-              type="text"
-              placeholder="Найти по нозванию"
-              value={filterTitle}
-              onChange={(e) => {
-                setFilterTitle(e.target.value)
-                console.log(filterTitle)
-              }}
-            />
-          </div>
-        }
+        >{filterText}
+          {filter === 'По названию' &&
+            <div className="name_filter">
+              <input
+                className="name_filter-input"
+                type="text"
+                placeholder="Найти по нозванию"
+                value={filterTitle}
+                onChange={(e) => {
+                  setFilterTitle(e.target.value)
+                  console.log(filterTitle)
+                }}
+              />
+            </div>}
+        </button>
+
 
         {/* Фильтр по автору */}
         <button
           className={filterAuthorsArr.length !== 0 ? "filter-active" : "filter"}
           onClick={() => clickOnFilter('По автору')}
-        >По автору</button>
+        >По автору
 
-        {filterAuthorsArr.length !== 0 ? <div className="authore_filter-lenght">{filterAuthorsArr.length}</div> : null}
+          {filterAuthorsArr.length !== 0 ? <div className="authore_filter-lenght">{filterAuthorsArr.length}</div> : null}
 
-        {
-          filter === 'По автору' &&
-          <div className="authore_filter">
-            <ul className="authore_filter-list">
-              {allUsers.map((user) => {
-                return (
-                  <li
-                    className={filterAuthorsArr.includes(user.id) ? "filter-li-a" : "filter-li"}
-                    key={user.id}
-                    onClick={() => { authorsFilterArr(user.id) }}
-                  >{user.name}</li>
-                )
-              })}
-            </ul>
-          </div>
-        }
+          {filter === 'По автору' &&
+            <div className="authore_filter">
+              <ul className="authore_filter-list">
+                {allUsers.map((user) => {
+                  return (
+                    <li
+                      className={filterAuthorsArr.includes(user.id) ? "filter-li-a" : "filter-li"}
+                      key={user.id}
+                      onClick={() => { authorsFilterArr(user.id) }}
+                    >{user.name}</li>
+                  )
+                })}
+              </ul>
+            </div>}
+        </button>
+
 
         {/* Фильтр по лайкам */}
         <button
           className={filterLikes === "Все" ? "filter" : "filter-active"}
           onClick={() => { clickOnFilter('По избранному') }}
-        >{filterLikes}</button>
+        >{filterLikes}
 
-        {
-          filter === 'По избранному' &&
-          <ul className="likes_filter">
-            <li
-              className={filterLikes === 'Все' ? "filter-li-a" : "filter-li"}
-              onClick={() => selecеLikeFilter('Все')}
-            >Все</li>
-            <li
-              className={filterLikes === 'С лайком' ? "filter-li-a" : "filter-li"}
-              onClick={() => selecеLikeFilter('С лайком')}
-            >С лайком</li>
-            <li
-              className={filterLikes === 'Без лайка' ? "filter-li-a" : "filter-li"}
-              onClick={() => selecеLikeFilter('Без лайка')}
-            >Без лайка</li>
-          </ul>
-        }
+          {filter === 'По избранному' &&
+            <ul className="likes_filter">
+              <li
+                className={filterLikes === 'Все' ? "filter-li-a" : "filter-li"}
+                onClick={() => selecеLikeFilter('Все')}
+              >Все</li>
+              <li
+                className={filterLikes === 'С лайком' ? "filter-li-a" : "filter-li"}
+                onClick={() => selecеLikeFilter('С лайком')}
+              >С лайком</li>
+              <li
+                className={filterLikes === 'Без лайка' ? "filter-li-a" : "filter-li"}
+                onClick={() => selecеLikeFilter('Без лайка')}
+              >Без лайка</li>
+            </ul>}
+        </button>
+
+
+
       </div>
       <div>
-
-        {/* Сортировка */}
         <button
           className={filterSort === "Сначала первые" ? "filter sort_filter_button" : "filter-active sort_filter_button"}
           onClick={() => clickOnFilter('Сортировка')}
-        >{filterSort}</button>
+        >{filterSort}
+          {filter === 'Сортировка' &&
+            <div className="sort_filter">
+
+              <ul className="sort_filter-list">
+                {sortArray.map((sort) => {
+                  return (
+                    <li
+                      className={filterSort === sort ? "filter-li-a" : "filter-li"}
+                      key={sort.id}
+                      onClick={() => {
+                        {
+                          setFilterSort(sort)
+                          setFilter('')
+                        }
+                      }}
+                    >{sort}</li>
+                  )
+                })}
+              </ul>
+            </div>}
+        </button>
+
+        {/* Сортировка */}
       </div>
 
-      {
-        filter === 'Сортировка' &&
-        <div className="sort_filter">
-
-          <ul className="sort_filter-list">
-            {sortArray.map((sort) => {
-              return (
-                <li
-                  className={filterSort === sort ? "filter-li-a" : "filter-li"}
-                  key={sort.id}
-                  onClick={() => {
-                    {
-                      setFilterSort(sort)
-                      setFilter('')
-                    }
-                  }}
-                >{sort}</li>
-              )
-            })}
-          </ul>
-        </div>
-      }
 
 
     </div>

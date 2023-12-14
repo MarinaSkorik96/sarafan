@@ -8,9 +8,10 @@
 .App {
   text-align: center;
   background-color: rgb(240, 240, 240);
-  border: 2px solid black;
   display: flex;
   flex-direction: row;
+  padding-left: calc(50% - 700px);
+  padding-right: calc(50% - 700px);
 }
 
 button:hover {

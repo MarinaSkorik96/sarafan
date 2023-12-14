@@ -9,7 +9,6 @@
 .filters_block{
   display: flex;
   gap: 15px;
-  /* position: relative; */
 
 }
 
@@ -25,6 +24,8 @@
   background-color: rgb(243, 246, 254);
   border: 1px solid #05386B;
   box-shadow:  0 0 3px #05386B;
+  position: relative;
+
 }
 
 .filter-active{
@@ -39,6 +40,7 @@
   background-color: rgb(203, 219, 249);
   border: 1px solid #05386B;
   box-shadow:  0 0 3px #05386B;
+  position: relative;
 
 }
 
@@ -53,15 +55,16 @@
   /* height: 50px; */
   position: absolute;
   border-radius: 20px;
-  top: 178px;
+  top: 45px;
+  left: -5px;
   list-style-type: none;
   text-align: start;
   padding: 10px;
 }
 
-.authore_filter{
-  left: 245px;
-}
+/* .authore_filter{
+  left: 195px;
+} */
 
 .authore_filter-lenght{
   width: 26px;
@@ -76,12 +79,11 @@
   line-height: 13px;
   text-align: center;
   padding-top: 6.5px;
-  top: 5px;
-  left: 340px;
+  top: 4.5px;
+  left: 146px;
 }
-
 .likes_filter{
-  left: 440px;
+  /* left: 388px; */
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -114,11 +116,11 @@
   width: 240px;
 }
 
-.sort_filter{
+/* .sort_filter{
 
   right: 22px;
   top: 178px;
-}
+} */
 
 .authore_filter-list,
 .sort_filter-list{

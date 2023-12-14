@@ -141,8 +141,6 @@ const getPostsSlace = createSlice({
       state.filterLikes = filterLikes
       state.filterSort = filterSort
 
-      console.log(JSON.stringify(filterSort))
-
       if (filterTitle) {
         if (state.filterTitle.length > 0) {
           state.filtersActive = true;
