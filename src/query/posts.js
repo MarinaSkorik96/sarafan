@@ -10,19 +10,9 @@ export const tracksApi = createApi({
   endpoints: (build) => ({
     getAllPosts: build.query({
       query: (limit = "") => `/posts?${limit && `_limit=${limit}`}`,
-      // providesTags: (result) =>
-      //   result
-      //     ? [
-      //       ...result.map(({ id }) => ({ type: 'Posts', id })),
-      //       { type: 'Posts', id: 'LIST' },
-      //     ]
-      //     : [{ type: 'Posts', id: 'LIST' }],
     }),
     getAllUsers: build.query({
       query: () => '/users/',
-    }),
-    getAllComments: build.query({
-      query: () => '/comments/',
     }),
     getPostComments: build.query({
       query: (post) => `/post/${post}/comments`,
@@ -30,4 +20,4 @@ export const tracksApi = createApi({
   })
 })
 
-export const { useGetAllPostsQuery, useGetAllUsersQuery, useGetAllCommentsQuery, useGetPostCommentsQuery} = tracksApi
+export const { useGetAllPostsQuery, useGetAllUsersQuery, useGetPostCommentsQuery} = tracksApi

@@ -13,8 +13,6 @@
   background-color: rgb(240, 240, 240);
   display: flex;
   flex-direction: row;
-  padding-left: calc(50% - 700px);
-  padding-right: calc(50% - 700px);
 }
 
 button:hover {

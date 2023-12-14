@@ -5,6 +5,9 @@
   padding: 5px;
   display: flex;
   flex-direction: row;
+  padding-left: calc(50% - 700px);
+  padding-right: calc(50% - 700px);
+
 }
 .add__comments-button{
   padding: 0;
@@ -24,6 +27,16 @@
   margin-left: 50px;
   display: flex;
   gap: 20px;
+}
+
+.add__comments-button-block{
+  background: #677686;
+  border: 2px solid #464f58;
+}
+
+.add__comments-button-block:hover{
+  background: #677686;
+  border: 2px solid #464f58;
 }
 
 .add__comments-button:hover{

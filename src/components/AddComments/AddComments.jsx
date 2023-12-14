@@ -1,10 +1,14 @@
 import React, { useState } from "react";
 import './AddCommentsStyle.css'
 import { useDispatch, useSelector } from "react-redux";
-import { getAddNewPost} from "../../store/slices/posts";
+import { getAddNewPost } from "../../store/slices/posts";
+import { useGetAllUsersQuery } from "../../query/posts";
 
 
 const AddComments = () => {
+
+  const { data: users, isError: usersError } = useGetAllUsersQuery();
+
   const { allUsers, status } = useSelector(state => state.posts)
 
   const [title, setTitle] = useState('')
@@ -47,11 +51,13 @@ const AddComments = () => {
 
   return (
     <div className="add__comments">
-      <button className="add__comments-button" onClick={() => {
-        setAddPostButtonOn(true)
-        setClosingClarificationWindow(false)
-        setAuthore(allUsers[0].name)
-      }}>
+      <button className={ usersError? "add__comments-button add__comments-button-block": "add__comments-button" }
+        disabled={usersError ? true : false}
+        onClick={() => {
+          setAddPostButtonOn(true)
+          setClosingClarificationWindow(false)
+          setAuthore(allUsers[0].name)
+        }}>
         <p>Добавить пост...</p>
         <div className="plus_box">
           <div className="add__comments-button_vertical"></div>

@@ -4,6 +4,9 @@
   margin: 20px;
   margin-left: 50px;
   justify-content: space-between;
+  padding-left: calc(50% - 700px);
+  padding-right: calc(50% - 700px);
+
 }
 
 .filters_block{

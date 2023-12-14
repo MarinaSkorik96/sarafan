@@ -1,10 +1,4 @@
-import { createSlice, unwrapResult, createAsyncThunk } from "@reduxjs/toolkit";
-import { useGetAllUsersQuery } from "../../query/posts";
-import { TbColumnInsertLeft } from "react-icons/tb";
-import { current } from "@reduxjs/toolkit";
-// import { getFreshToken } from "../../store/slices/user";
-// import { useDispatch, useSelector } from "react-redux";
-// import { useGetFavoritesTracksQuery } from "../../query/tracks";
+import { createSlice, createAsyncThunk, current } from "@reduxjs/toolkit";
 
 export const getAddNewPost = createAsyncThunk(
   'posts/getAddNewPost',
@@ -27,7 +21,6 @@ export const getAddNewPost = createAsyncThunk(
       }
 
       const data = await response.json();
-      console.log(data)
       dispatch(addPost(data))
 
     } catch (error) {
@@ -107,14 +100,14 @@ const getPostsSlace = createSlice({
       // state.allPosts= [...action.payload].reverse()
       state.allPosts = action.payload
     },
-    currentUserId(state, action) {
-      state.userId = state.allUsers.find((user) => user.name === action.payload).id
-    },
-    getNumbersOfPosts(state, action) {
-
-    },
     getLikedPosts(state, action) {
-      state.likedPosts = action.payload
+      const likedPosts = action.payload
+      console.log(likedPosts)
+      if(likedPosts) {
+        let arfId = []
+        likedPosts.map((post)=> arfId.push(post.id) ) 
+        state.likedPosts = arfId 
+      }
     },
     getAllUsers(state, actions) {
       state.allUsers = actions.payload
@@ -136,11 +129,14 @@ const getPostsSlace = createSlice({
     getFilter(state, action) {
       const { filterTitle, filterAuthorsArr, filterLikes, filterSort } = action.payload
       let filteredPosts = state.allPosts
+      console.log(filterLikes)
       state.filterTitle = filterTitle
       state.filterAuthorsArr = filterAuthorsArr
       state.filterLikes = filterLikes
       state.filterSort = filterSort
 
+
+      // Фильтр по заголовку 
       if (filterTitle) {
         if (state.filterTitle.length > 0) {
           state.filtersActive = true;
@@ -152,6 +148,7 @@ const getPostsSlace = createSlice({
         }
       }
 
+      // Фильтр по автору
       if (state.filterAuthorsArr && state.filterAuthorsArr.length > 0) {
         state.filtersActive = true;
         filteredPosts = filteredPosts.filter((post) =>
@@ -159,6 +156,7 @@ const getPostsSlace = createSlice({
         );
       }
 
+      //Фильтр по лайкнутости
       if (state.filterLikes) {
         if (state.filterLikes === 'С лайком') {
           state.filtersActive = true;
@@ -172,8 +170,8 @@ const getPostsSlace = createSlice({
         }
       }
 
+      //Сортировка
       if (state.filterSort && state.filterSort !== '') {
-
         if (state.filterSort === 'Сначала первые') {
           filteredPosts = filteredPosts.sort((a, b) => a.id - b.id)
         } else if (state.filterSort === 'Сначала последние') {
@@ -220,67 +218,30 @@ const getPostsSlace = createSlice({
           })
         } else if (state.filterSort === 'Избранные сначала') {
           state.filtersActive = true;
-
-          let postsWithLikes = filteredPosts.filter((post) =>
-            state.likedPosts.includes(post.id))
-          let postsWithoutLikes = filteredPosts.filter((post) =>
-            !state.likedPosts.includes(post.id))
+          let postsWithLikes = filteredPosts.filter((post) =>state.likedPosts.includes(post.id))
+          let postsWithoutLikes = filteredPosts.filter((post) =>!state.likedPosts.includes(post.id))
           filteredPosts = [...postsWithLikes, ...postsWithoutLikes]
         } else if (state.filterSort === 'Избранные в конце') {
           state.filtersActive = true;
-
-          let postsWithLikes = filteredPosts.filter((post) =>
-            state.likedPosts.includes(post.id))
-          let postsWithoutLikes = filteredPosts.filter((post) =>
-            !state.likedPosts.includes(post.id))
+          let postsWithLikes = filteredPosts.filter((post) =>state.likedPosts.includes(post.id))
+          let postsWithoutLikes = filteredPosts.filter((post) =>!state.likedPosts.includes(post.id))
           filteredPosts = [...postsWithoutLikes, ...postsWithLikes]
-
         }
       }
-
-
-
       state.filteredPosts = filteredPosts
     }
-  },
-  extraReducers: {
-    [getDeletePost.pending]: (state, action) => {
-      state.status = "loading"
-    },
-    [getDeletePost.fulfilled]: (state, action) => {
-      state.status = "resolved"
-    },
-    [getDeletePost.rejected]: (state, action) => {
-      state.status = 'rejected';
-      state.error = action.payload;
-    },
-    [getChangePost.pending]: (state, action) => {
-      state.status = "loading"
-    },
-    [getChangePost.fulfilled]: (state, action) => {
-      state.status = "resolved"
-    },
-    [getChangePost.rejected]: (state, action) => {
-      state.status = 'rejected';
-      console.log(action.payload)
-      state.error = action.payload;
-    },
-    [getAddNewPost.pending]: (state, action) => {
-      state.status = "loading"
-    },
-    [getAddNewPost.fulfilled]: (state, action) => {
-      state.status = "resolved"
-    },
-    [getAddNewPost.rejected]: (state, action) => {
-      state.status = 'rejected';
-      console.log(action.payload)
-      state.error = action.payload;
-    }
   }
-
 });
 
 
-export const { getAllPosts, currentUserId, currentUser, getLikedPosts, getAllUsers, addPost, deletePost, changePost, getFilter } = getPostsSlace.actions;
+export const {
+  getAllPosts,
+  getLikedPosts,
+  getAllUsers,
+  addPost,
+  deletePost,
+  changePost,
+  getFilter
+} = getPostsSlace.actions;
 
 export default getPostsSlace.reducer;
