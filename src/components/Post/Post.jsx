@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import './PostStyles.css'
-import { useGetAllPostsQuery, useGetAllUsersQuery, useGetAllCommentsQuery, useGetDeletePostMutation } from "../../query/posts";
-import { getTodos } from "../../api";
+import { useGetAllPostsQuery, useGetAllUsersQuery } from "../../query/posts";
 import { useEffect } from 'react';
 import { IoMdHeartEmpty } from "react-icons/io";
 import { IoHeart } from "react-icons/io5";
@@ -9,15 +8,13 @@ import { MdDeleteOutline } from "react-icons/md";
 import { MdOutlineEdit } from "react-icons/md";
 import { IoCheckboxOutline } from "react-icons/io5";
 import { MdOutlineCheckBoxOutlineBlank } from "react-icons/md";
-import { MdOutlineAutoDelete } from "react-icons/md";
 import Comments from "../Comments/Comments";
 import { useDispatch, useSelector } from "react-redux";
-import { allPosts, getAllUsers, deletePost, getAllPosts, getChangePost, getDeletePost, getLikedPosts } from "../../store/slices/posts";
-import { TbCoinRupee, TbColumnInsertLeft } from "react-icons/tb";
+import { getAllUsers, getAllPosts, getChangePost, getDeletePost, getLikedPosts } from "../../store/slices/posts";
 
-const Post = () => {
+const Post = ({ numbersOfPosts }) => {
+
   const dispatch = useDispatch();
-  const numbersOfPostsDef = localStorage.getItem('quantity') ? localStorage.getItem('quantity') : 10;
 
   const [postCommentsOn, setPostCommentsOn] = useState([])
   const [checkPosts, setCheckPots] = useState([])
@@ -25,11 +22,10 @@ const Post = () => {
   const [actionWithPosts, setActionWithPosts] = useState("")
   const [postToBeDeleted, setPostToBeDeleted] = useState()
   const [postEditing, setPostEditing] = useState(false)
-  const [numbersOfPosts, setNumbersOfPosts] = useState(numbersOfPostsDef)
   const [title, setTitle] = useState('')
   const [text, setText] = useState('')
   const [changedUser, setChangedUser] = useState("")
-  const [selected, setSelected] = useState('');
+
   const {
     allPosts,
     allUsers,
@@ -37,18 +33,10 @@ const Post = () => {
     filteredPosts,
     filtersActive
   } = useSelector(state => state.posts)
-
   const posts = filtersActive ? filteredPosts : allPosts
-
-  const { data: postsData, isLoading: postsLoading } = useGetAllPostsQuery(numbersOfPosts);
+  const { data: postsData, isLoading: postsLoading, isError: postsError } = useGetAllPostsQuery(numbersOfPosts);
   const { data: users } = useGetAllUsersQuery();
-
-  // Сохранение выбора колличества постов
-  const saveNumberOfPosts = (n) => {
-    setNumbersOfPosts(n)
-    localStorage.setItem('quantity', n);
-  }
-
+console.log(postsError)
   useEffect(() => {
     dispatch(getAllUsers(users))
     dispatch(getLikedPosts(favoritesPosts))
@@ -80,15 +68,11 @@ const Post = () => {
     })
   }
 
-  const handleChange = event => {
-    // console.log('Label 👉️', event.target.selectedOptions[0].label);
-    // console.log(event.target.value);
-    setSelected(event.target.value);
-  };
-
   return (
     <>
       <>
+        {postsError && <p>Ошибка загрузки постовб попробуйте позже</p>}
+        {filteredPosts && posts.length === 0 && <h3 className="no-posts">Не найдено ни одного подходящего поста</h3>}
         {postsLoading ? <p>Подождите, посты загружаются...</p> : posts.map((post) => {
           return (
             <div key={post.id} className={postCommentsOn.includes(post.id) ? "postD" : "post"}>
@@ -143,80 +127,79 @@ const Post = () => {
                 }
               </div>
 
-                <div className="post_main">
-                  <div className="post_header">
+              <div className="post_main">
+                <div className="post_header">
 
-                    {postEditing === true && postToBeDeleted === post ?
-                      <>
-                        <select className="change_post-authore"
-                          defaultValue={allUsers.find(user => user.id === post.userId).name}
-                        >
-                          {allUsers ? allUsers.map((user) => {
-                            return (
-                              <option
-                                key={user.id}
-                              >{user.name}</option>
-                            )
-                          }) : null}
-                        </select>
-                        <textarea
-                          rows='3'
-                          className="change_post-title"
-                          onChange={(e) => setTitle(e.target.value)}
-                          defaultValue={postToBeDeleted.title}
-                        />
-                        <textarea
-                          rows='7'
-                          className="change_post-body"
-                          onChange={(e) => setText(e.target.value)
-                          }
-                          defaultValue={postToBeDeleted.body}
-                        />
-                      </>
-                      :
-                      <>
-                        {users && <p className="post_author">
-                          {users.find(user => user.id === post.userId).name}
-                        </p>}
-                        <h3 className="post_title">{post.title}</h3>
-                        <p className="post_text">{post.body}</p>
-                      </>
-                    }
-                  </div>
-
-                  {/* Нижние кнопки поста */}
                   {postEditing === true && postToBeDeleted === post ?
-                    <div className="edditing-buttons">
-                      <button
-                        className="post_button-comments"
-                        disabled={status === "loading" ? true : false}
-                        onClick={() => {
-                          changePost(postToBeDeleted)
-                          // }
-                        }}>Сохранить</button>
-                      <button
-                        className="post_button-comments"
-                        onClick={() => {
-                          setPostEditing(false)
-                        }}
-                      >Отменить</button>
-                    </div>
+                    <>
+                      <select className="change_post-authore"
+                        defaultValue={allUsers.find(user => user.id === post.userId).name}
+                      >
+                        {allUsers ? allUsers.map((user) => {
+                          return (
+                            <option
+                              key={user.id}
+                            >{user.name}</option>
+                          )
+                        }) : null}
+                      </select>
+                      <textarea
+                        rows='3'
+                        className="change_post-title"
+                        onChange={(e) => setTitle(e.target.value)}
+                        defaultValue={postToBeDeleted.title}
+                      />
+                      <textarea
+                        rows='7'
+                        className="change_post-body"
+                        onChange={(e) => setText(e.target.value)
+                        }
+                        defaultValue={postToBeDeleted.body}
+                      />
+                    </>
                     :
-                    <button className="post_button-comments" onClick={() => {
-                      if (postCommentsOn.includes(post.id)) {
-                        let postId = post.id
-                        setPostCommentsOn(postCommentsOn.filter((post) => post !== postId))
-                      } else {
-                        setPostCommentsOn([...postCommentsOn, post.id])
-                      }
-                    }}>
-                      {postCommentsOn.includes(post.id) ? <span>Скрыть комментарии</span> : <span>Комментарии</span>}
-                    </button>
+                    <>
+                      {users && <p className="post_author">
+                        {users.find(user => user.id === post.userId).name}
+                      </p>}
+                      <h3 className="post_title">{post.title}</h3>
+                      <p className="post_text">{post.body}</p>
+                    </>
                   }
-
-                  {postCommentsOn.includes(post.id) ? <Comments post={post.id} /> : null}
-
                 </div>
+
+                {/* Нижние кнопки поста */}
+                {postEditing === true && postToBeDeleted === post ?
+                  <div className="edditing-buttons">
+                    <button
+                      className="edditing-button"
+                      disabled={status === "loading" ? true : false}
+                      onClick={() => {
+                        changePost(postToBeDeleted)
+                      }}>Сохранить</button>
+                    <button
+                      className="edditing-button"
+                      onClick={() => {
+                        setPostEditing(false)
+                      }}
+                    >Отменить</button>
+                  </div>
+                  :
+                  <button className="post_button-comments" onClick={() => {
+                    if (postCommentsOn.includes(post.id)) {
+                      let postId = post.id
+                      setPostCommentsOn(postCommentsOn.filter((post) => post !== postId))
+                    } else {
+                      setPostCommentsOn([...postCommentsOn, post.id])
+                    }
+                  }}>
+                    {postCommentsOn.includes(post.id) ? <span>Скрыть комментарии</span> : <span>Комментарии</span>}
+                  </button>
+                }
+
+                {postCommentsOn.includes(post.id) ? <Comments post={post.id} /> : null}
+
+              </div>
             </div>
           )
         })}
@@ -246,8 +229,6 @@ const Post = () => {
                 })
               } else if (actionWithPosts === "Удалить пост") {
                 deletePost(postToBeDeleted)
-                // console.log(postToBeDeleted)
-                // dispatch(getDeletePost(postToBeDeleted))
               }
               if (actionWithPosts !== "Удалить пост") {
                 setCheckPots([])
@@ -265,13 +246,6 @@ const Post = () => {
         </div>
       }
 
-      <p>Показывать по
-        <button onClick={() => { saveNumberOfPosts(10) }}>10</button>
-        <button onClick={() => { saveNumberOfPosts(20) }}>20</button>
-        <button onClick={() => { saveNumberOfPosts(50) }}>50</button>
-        <button onClick={() => { saveNumberOfPosts(100) }}>100</button>
-        <button onClick={() => { saveNumberOfPosts(100) }}>Все</button>
-      </p>
 
     </>
   )

@@ -47,17 +47,19 @@ const Filters = () => {
 
 
         {/* Фильтр по названию */}
-        <button
-          className={filterTitle === '' ? "filter" : "filter-active"}
-          onClick={() => {
-            clickOnFilter('По названию')
-            if (filterTitle !== "") {
-              setFilterText(filterTitle)
-            } else {
-              setFilterText('По названию')
-            }
-          }}
-        >{filterText}
+        <div className="filter_block">
+          <button
+            className={filterTitle === '' ? "filter" : "filter-active"}
+            onClick={() => {
+              clickOnFilter('По названию')
+              if (filterTitle !== "") {
+                setFilterText(filterTitle)
+              } else {
+                setFilterText('По названию')
+              }
+            }}
+          >{filterText}
+          </button>
           {filter === 'По названию' &&
             <div className="name_filter">
               <input
@@ -71,14 +73,15 @@ const Filters = () => {
                 }}
               />
             </div>}
-        </button>
-
+        </div>
 
         {/* Фильтр по автору */}
-        <button
-          className={filterAuthorsArr.length !== 0 ? "filter-active" : "filter"}
-          onClick={() => clickOnFilter('По автору')}
-        >По автору
+        <div className="filter_block">
+          <button
+            className={filterAuthorsArr.length !== 0 ? "filter-active" : "filter"}
+            onClick={() => clickOnFilter('По автору')}
+          >По автору
+          </button>
 
           {filterAuthorsArr.length !== 0 ? <div className="authore_filter-lenght">{filterAuthorsArr.length}</div> : null}
 
@@ -96,8 +99,7 @@ const Filters = () => {
                 })}
               </ul>
             </div>}
-        </button>
-
+        </div>
 
         {/* Фильтр по лайкам */}
         <button
@@ -121,15 +123,15 @@ const Filters = () => {
               >Без лайка</li>
             </ul>}
         </button>
-
-
-
       </div>
+
+      {/* Сортировка */}
       <div>
         <button
           className={filterSort === "Сначала первые" ? "filter sort_filter_button" : "filter-active sort_filter_button"}
           onClick={() => clickOnFilter('Сортировка')}
         >{filterSort}
+
           {filter === 'Сортировка' &&
             <div className="sort_filter">
 
@@ -138,7 +140,7 @@ const Filters = () => {
                   return (
                     <li
                       className={filterSort === sort ? "filter-li-a" : "filter-li"}
-                      key={sort.id}
+                      key={sort}
                       onClick={() => {
                         {
                           setFilterSort(sort)
@@ -151,8 +153,6 @@ const Filters = () => {
               </ul>
             </div>}
         </button>
-
-        {/* Сортировка */}
       </div>
 
 

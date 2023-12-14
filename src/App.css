@@ -4,7 +4,10 @@
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
-
+.all-background{
+  min-height: 100%;
+  background-color: rgb(240, 240, 240);
+}
 .App {
   text-align: center;
   background-color: rgb(240, 240, 240);

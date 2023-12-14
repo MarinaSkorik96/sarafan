@@ -110,7 +110,7 @@ const getPostsSlace = createSlice({
     currentUserId(state, action) {
       state.userId = state.allUsers.find((user) => user.name === action.payload).id
     },
-    currentUser(state, action) {
+    getNumbersOfPosts(state, action) {
 
     },
     getLikedPosts(state, action) {
@@ -179,9 +179,25 @@ const getPostsSlace = createSlice({
         } else if (state.filterSort === 'Сначала последние') {
           filteredPosts = filteredPosts.sort((a, b) => b.id - a.id)
         } else if (state.filterSort === 'По имени автора A-Z') {
-
+          filteredPosts = filteredPosts.sort((a, b) => {
+            if (state.allUsers.find(user => user.id === a.userId).name < state.allUsers.find(user => user.id === b.userId).name) {
+              return -1;
+            }
+            if (state.allUsers.find(user => user.id === a.userId).name > state.allUsers.find(user => user.id === b.userId).name) {
+              return 1;
+            }
+            return 0;
+          })
         } else if (state.filterSort === 'По имени автора Z-A') {
-
+          filteredPosts = filteredPosts.sort((a, b) => {
+            if (state.allUsers.find(user => user.id === b.userId).name < state.allUsers.find(user => user.id === a.userId).name) {
+              return -1;
+            }
+            if (state.allUsers.find(user => user.id === b.userId).name > state.allUsers.find(user => user.id === a.userId).name) {
+              return 1;
+            }
+            return 0;
+          })
         } else if (state.filterSort === 'По названию A-Z') {
           filteredPosts = filteredPosts.sort((a, b) => {
             if (a.title.toLowerCase() < b.title.toLowerCase()) {

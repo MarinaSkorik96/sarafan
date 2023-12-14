@@ -1,0 +1,25 @@
+.footer-buttons{
+  background-color: rgb(222, 222, 222);
+  height: 100px;
+  font-weight: 500;
+  font-size: 24px;
+  color: #00274d;
+  display: flex;
+  gap:10px;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer-button{
+border: none;
+padding: 10px;
+border-radius: 10px;
+font-weight: 500;
+font-size: 18px;
+color: #00274d;
+}
+
+.footer-button-active{
+  background-color: rgb(161, 192, 248);
+
+}

@@ -1,12 +1,9 @@
 .posts{
   display: flex;
-  /* flex: 1 1; */
    gap: 15px;
   flex-wrap: wrap;
   justify-content: space-between;
-  /* grid-template-columns: 1fr 1fr ; */
-  /* grid-column-gap: 10px; */
-  /* grid-auto-columns: minmax(200px, auto); */
   padding-left: 20px;
   padding-right: 20px;
+  margin-bottom: 30px;
 }

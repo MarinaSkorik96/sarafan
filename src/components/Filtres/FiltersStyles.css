@@ -9,6 +9,9 @@
 .filters_block{
   display: flex;
   gap: 15px;
+}
+.filter_block{
+  position: relative;
 
 }
 
