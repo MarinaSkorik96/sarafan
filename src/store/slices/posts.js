@@ -103,10 +103,10 @@ const getPostsSlace = createSlice({
     getLikedPosts(state, action) {
       const likedPosts = action.payload
       console.log(likedPosts)
-      if(likedPosts) {
+      if (likedPosts) {
         let arfId = []
-        likedPosts.map((post)=> arfId.push(post.id) ) 
-        state.likedPosts = arfId 
+        likedPosts.map((post) => arfId.push(post.id))
+        state.likedPosts = arfId
       }
     },
     getAllUsers(state, actions) {
@@ -127,17 +127,20 @@ const getPostsSlace = createSlice({
       // const {r} = action.payload
     },
     getFilter(state, action) {
-      const { filterTitle, filterAuthorsArr, filterLikes, filterSort } = action.payload
-      let filteredPosts = state.allPosts
-      console.log(filterLikes)
-      state.filterTitle = filterTitle
-      state.filterAuthorsArr = filterAuthorsArr
-      state.filterLikes = filterLikes
-      state.filterSort = filterSort
 
+      if (action.payload) {
+        const { filterTitle, filterAuthorsArr, filterLikes, filterSort } = action.payload
+        console.log(filterLikes)
+        state.filterTitle = filterTitle
+        state.filterAuthorsArr = filterAuthorsArr
+        state.filterLikes = filterLikes
+        state.filterSort = filterSort
+      }
+
+      let filteredPosts = state.allPosts
 
       // Фильтр по заголовку 
-      if (filterTitle) {
+      if (state.filterTitle) {
         if (state.filterTitle.length > 0) {
           state.filtersActive = true;
           filteredPosts = filteredPosts.filter((post) =>
@@ -218,13 +221,13 @@ const getPostsSlace = createSlice({
           })
         } else if (state.filterSort === 'Избранные сначала') {
           state.filtersActive = true;
-          let postsWithLikes = filteredPosts.filter((post) =>state.likedPosts.includes(post.id))
-          let postsWithoutLikes = filteredPosts.filter((post) =>!state.likedPosts.includes(post.id))
+          let postsWithLikes = filteredPosts.filter((post) => state.likedPosts.includes(post.id))
+          let postsWithoutLikes = filteredPosts.filter((post) => !state.likedPosts.includes(post.id))
           filteredPosts = [...postsWithLikes, ...postsWithoutLikes]
         } else if (state.filterSort === 'Избранные в конце') {
           state.filtersActive = true;
-          let postsWithLikes = filteredPosts.filter((post) =>state.likedPosts.includes(post.id))
-          let postsWithoutLikes = filteredPosts.filter((post) =>!state.likedPosts.includes(post.id))
+          let postsWithLikes = filteredPosts.filter((post) => state.likedPosts.includes(post.id))
+          let postsWithoutLikes = filteredPosts.filter((post) => !state.likedPosts.includes(post.id))
           filteredPosts = [...postsWithoutLikes, ...postsWithLikes]
         }
       }

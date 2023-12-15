@@ -103,7 +103,7 @@ const AddComments = () => {
             />
             {closingClarificationWindow ?
               <div>
-                <p>Уверевы, что хотите закрыть? Введенные данные будут потеряны.</p>
+                <p className="add_comment_check">Уверевы, что хотите закрыть? Введенные данные будут потеряны.</p>
                 <div className="buttons_box">
                   <button
                     className="add_comment_form-button"

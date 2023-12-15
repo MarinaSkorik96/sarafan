@@ -10,7 +10,7 @@ import { IoCheckboxOutline } from "react-icons/io5";
 import { MdOutlineCheckBoxOutlineBlank } from "react-icons/md";
 import Comments from "../Comments/Comments";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllUsers, getAllPosts, getChangePost, getDeletePost, getLikedPosts } from "../../store/slices/posts";
+import { getAllUsers, getAllPosts, getChangePost, getDeletePost, getLikedPosts, getFilter } from "../../store/slices/posts";
 
 const Post = ({ numbersOfPosts }) => {
 
@@ -38,13 +38,29 @@ const Post = ({ numbersOfPosts }) => {
   const { data: postsData, isLoading: postsLoading, isError: postsError } = useGetAllPostsQuery(numbersOfPosts);
   const { data: users, isError: usersError } = useGetAllUsersQuery();
   console.log(postsError)
+
+  useEffect(() => {
+    dispatch(getLikedPosts(favoritesPosts))
+    dispatch(getFilter())
+
+  }, [favoritesPosts])
+
   useEffect(() => {
     dispatch(getAllUsers(users))
-    dispatch(getLikedPosts(favoritesPosts))
     if (postsData) {
       dispatch(getAllPosts(postsData))
     }
-  }, [postsData, favoritesPosts, users])
+  }, [postsData, users])
+
+  console.log(filteredPosts)
+  console.log(allPosts)
+  useEffect(() => {
+    dispatch(getFilter())
+  }, [allPosts])
+
+  console.log(filteredPosts)
+  console.log(allPosts)
+
   const posts = filtersActive ? filteredPosts : allPosts
 
   // Удаление поста
@@ -92,10 +108,10 @@ const Post = ({ numbersOfPosts }) => {
                         <IoHeart />
                       </div>
                       :
-                      <div className="post_side-block " onClick={() => { 
+                      <div className="post_side-block " onClick={() => {
                         setFavoritesPosts([...favoritesPosts, post])
 
-                         }}>
+                      }}>
                         <IoMdHeartEmpty />
                       </div>
                     }
@@ -138,6 +154,8 @@ const Post = ({ numbersOfPosts }) => {
                     <div className="post_header">
 
                       {postEditing === true && postToBeDeleted === post ?
+
+                      //Редактирование поста
                         <>
                           <select className="change_post-authore"
                             defaultValue={allUsers.find(user => user.id === post.userId).name}
@@ -165,6 +183,8 @@ const Post = ({ numbersOfPosts }) => {
                           />
                         </>
                         :
+
+                        // Тело поста
                         <>
                           {users && <p className="post_author">
                             {users.find(user => user.id === post.userId).name}
@@ -226,12 +246,12 @@ const Post = ({ numbersOfPosts }) => {
       {actionWithPosts !== "" &&
         <div className="background">
           <div className="confirm_action">
-            <p>Подтвердите действие</p>
+            <p className="confirm_title">Подтвердите действие</p>
             <button className="confirm_action-button" onClick={() => {
               if (actionWithPosts === "Добавить в избранное") {
                 setFavoritesPosts([...favoritesPosts, ...checkPosts]);
                 let arfId = []
-                checkPosts.map((post)=> arfId.push(post.id) )
+                checkPosts.map((post) => arfId.push(post.id))
                 console.log(arfId)
               } else if (actionWithPosts === "Удалить") {
                 checkPosts.forEach((post) => {

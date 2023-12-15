@@ -43,8 +43,9 @@ const Filters = () => {
 
   return (
     <div className="filters">
-      <div className="filters_block">
 
+      <div className="filters_block">
+        <p className="filters_title">Фильтры:</p>
 
         {/* Фильтр по названию */}
         <div className="filter_block">
@@ -103,7 +104,7 @@ const Filters = () => {
 
         {/* Фильтр по лайкам */}
         <button
-          className={filterLikes === "Все" ? "filter" : "filter-active"}
+          className={filterLikes === "Все" ? "filter filter-small" : "filter-active filter-small"}
           onClick={() => { clickOnFilter('По избранному') }}
         >{filterLikes}
 
@@ -126,7 +127,8 @@ const Filters = () => {
       </div>
 
       {/* Сортировка */}
-      <div>
+      <div className="sort_block">
+        <p className="filters_title">Сортировка:</p>
         <button
           className={filterSort === "Сначала первые" ? "filter sort_filter_button" : "filter-active sort_filter_button"}
           onClick={() => clickOnFilter('Сортировка')}

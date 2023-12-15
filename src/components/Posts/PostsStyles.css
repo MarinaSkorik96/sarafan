@@ -1,6 +1,6 @@
 .posts{
   display: flex;
-   gap: 15px;
+  gap: 15px;
   flex-wrap: wrap;
   justify-content: space-between;
   padding-left: 20px;
@@ -11,4 +11,13 @@
   padding-right: calc(50% - 700px);
   margin-left: 10px;
   margin-right: 10px;
+}
+
+@media (max-width: 770px) {
+  .posts{
+    gap: 5px;
+    padding-left: calc(50% - 400px);
+    padding-right: calc(50% - 400px);
+
+  }
 }
