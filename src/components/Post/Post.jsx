@@ -19,6 +19,7 @@ const Post = ({ numbersOfPosts }) => {
   const [postCommentsOn, setPostCommentsOn] = useState([])
   const [checkPosts, setCheckPots] = useState([])
   const [favoritesPosts, setFavoritesPosts] = useState([])
+  const [favoritesPostsId, setFavoritesPostsId] = useState([])
 
   const [actionWithPosts, setActionWithPosts] = useState("")
   const [postToBeDeleted, setPostToBeDeleted] = useState()
@@ -37,12 +38,15 @@ const Post = ({ numbersOfPosts }) => {
 
   const { data: postsData, isLoading: postsLoading, isError: postsError } = useGetAllPostsQuery(numbersOfPosts);
   const { data: users, isError: usersError } = useGetAllUsersQuery();
-  console.log(postsError)
 
   useEffect(() => {
     dispatch(getLikedPosts(favoritesPosts))
     dispatch(getFilter())
-
+    if (favoritesPosts) {
+      let arfId = []
+      favoritesPosts.map((post) => arfId.push(post.id))
+      setFavoritesPostsId([...arfId])
+    }
   }, [favoritesPosts])
 
   useEffect(() => {
@@ -52,14 +56,9 @@ const Post = ({ numbersOfPosts }) => {
     }
   }, [postsData, users])
 
-  console.log(filteredPosts)
-  console.log(allPosts)
   useEffect(() => {
     dispatch(getFilter())
   }, [allPosts])
-
-  console.log(filteredPosts)
-  console.log(allPosts)
 
   const posts = filtersActive ? filteredPosts : allPosts
 
@@ -101,9 +100,9 @@ const Post = ({ numbersOfPosts }) => {
                   <div className="post_side-bar">
 
                     {/* Избранное */}
-                    {favoritesPosts.includes(post) ?
+                    {favoritesPostsId.includes(post.id) ?
                       <div className="post_side-block post_side-block-active" onClick={() => {
-                        setFavoritesPosts(favoritesPosts.filter((checkPost) => checkPost !== post))
+                        setFavoritesPosts(favoritesPosts.filter((checkPost) => checkPost.id !== post.id))
                       }}>
                         <IoHeart />
                       </div>
@@ -275,8 +274,6 @@ const Post = ({ numbersOfPosts }) => {
 
         </div>
       }
-
-
     </>
   )
 }

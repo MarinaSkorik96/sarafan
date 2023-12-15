@@ -1,6 +1,5 @@
 import React from "react";
 import './FooterStyles.css'
-import { useSelector } from "react-redux";
 import { useGetAllPostsQuery } from "../../query/posts";
 
 const Footer = ({ saveNumberOfPosts }) => {

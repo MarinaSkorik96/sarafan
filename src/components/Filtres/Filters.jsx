@@ -15,12 +15,10 @@ const Filters = () => {
 
   const { allUsers } = useSelector(state => state.posts)
 
-  // console.log(filter)
   useEffect(() => {
     dispatch(getFilter({ filterTitle, filterAuthorsArr, filterLikes, filterSort }))
   }, [filterTitle, filterAuthorsArr, filterLikes, filterSort])
 
-  // console.log(filter)
   const clickOnFilter = (f) => {
     setFilter(f)
     if (filter === f) {
@@ -156,9 +154,6 @@ const Filters = () => {
             </div>}
         </button>
       </div>
-
-
-
     </div>
   )
 }

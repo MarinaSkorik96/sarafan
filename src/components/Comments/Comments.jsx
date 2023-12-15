@@ -21,7 +21,6 @@ const Comments = ({ post }) => {
                 </div>
               )
             })}
-      {/* {isError ? null : } */}
     </div>
   )
 }

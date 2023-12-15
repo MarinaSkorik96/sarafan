@@ -50,9 +50,6 @@ export const getDeletePost = createAsyncThunk(
 export const getChangePost = createAsyncThunk(
   'post/getCangePost',
   async function ({ postToBeDeleted, index, title, text, userId }, { rejectWithValue, dispatch }) {
-    // console.log(changedUser )
-    // let id = initialState.allUsers.find((user) => user.name === changedUser).id
-    // console.log(id)
     console.log(initialState.allUsers)
     try {
       const response = await fetch(`https://jsonplaceholder.typicode.com/posts/${postToBeDeleted.id}`, {
@@ -97,7 +94,6 @@ const getPostsSlace = createSlice({
   initialState,
   reducers: {
     getAllPosts(state, action) {
-      // state.allPosts= [...action.payload].reverse()
       state.allPosts = action.payload
     },
     getLikedPosts(state, action) {
@@ -124,7 +120,6 @@ const getPostsSlace = createSlice({
       console.log(index)
       console.log(data)
       state.allPosts[index] = data
-      // const {r} = action.payload
     },
     getFilter(state, action) {
 
@@ -235,7 +230,6 @@ const getPostsSlace = createSlice({
     }
   }
 });
-
 
 export const {
   getAllPosts,

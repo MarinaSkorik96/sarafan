@@ -61,7 +61,6 @@
   border: 1px solid #05386B;
   box-shadow:  0 0 3px #05386B;
   width: 250px;
-  /* height: 50px; */
   position: absolute;
   border-radius: 20px;
   top: 45px;
@@ -70,10 +69,6 @@
   text-align: start;
   padding: 10px;
 }
-
-/* .authore_filter{
-  left: 195px;
-} */
 
 .authore_filter-lenght{
   width: 26px;
@@ -92,13 +87,10 @@
   left: 146px;
 }
 .likes_filter{
-  /* left: 388px; */
   display: flex;
   flex-direction: column;
   gap: 10px;
-
 }
-
 
 .name_filter-input{
   background: transparent;
@@ -124,7 +116,6 @@
 .sort_filter_button{
   width: 240px;
 }
-
 
 .authore_filter-list,
 .sort_filter-list{
@@ -242,7 +233,6 @@
   }
   .likes_filter{
     width: 135px;
-    /* left: -50px; */
   }
 }
 
@@ -252,7 +242,6 @@
   }
   .likes_filter{
     width: 125px;
-    /* left: -50px; */
   }
 }
 
@@ -284,7 +273,6 @@
   .sort_filter{
     width: 150px;
     top: 35px;
-    /* left: 0px; */
     font-size: 12px;
     padding: 5px 10px 5px 10px;
     border-radius: 15px;

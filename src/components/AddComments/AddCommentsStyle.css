@@ -87,8 +87,8 @@
   position: absolute;
   left: calc(50% - 250px);
   top: calc(40% - 150px);
-  /* position: relative; */
 }
+
 .add_comment-background{
   position: fixed;
   width: 100%;
@@ -116,8 +116,8 @@
   padding: 5px 10px 5px 10px;
   color:#05386B;
   outline: none;
-  /* background-color: aquamarine; */
 }
+
 .add_comment_form-title,
 .add_comment_form-text{
   padding: 10px;
@@ -190,7 +190,6 @@
   .add_comment_form-author{
     width: 250px;
     font-size: 14px;
-    /* background-color: aquamarine; */
   }
 
   .add_comment_form-title,
@@ -208,7 +207,6 @@
 
 @media (max-width: 500px) {
  
-
   .add_comment-form{
     width: 300px;
     height: 250px;

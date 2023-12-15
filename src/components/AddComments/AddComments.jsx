@@ -122,7 +122,6 @@ const AddComments = () => {
               <button
                 className="add_comment_form-button"
                 onClick={() => {
-                  // add()
                   addPost()
                 }}
                 disabled={status === "loading" ? true : false}
