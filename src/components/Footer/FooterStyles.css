@@ -1,0 +1,52 @@
+.footer-buttons{
+  background-color: rgb(222, 222, 222);
+  height: 100px;
+  font-weight: 500;
+  font-size: 24px;
+  color: #00274d;
+  display: flex;
+  gap:10px;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer-button{
+border: none;
+padding: 10px;
+border-radius: 10px;
+font-weight: 500;
+font-size: 18px;
+color: #00274d;
+}
+
+.footer-button-active{
+  background-color: rgb(161, 192, 248);
+}
+
+@media (max-width: 670px){
+  .footer-buttons{
+    height: 60px;
+    font-size: 16px;
+    gap:5px;
+  }
+
+  .footer-button{
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 360px){
+  .footer-buttons{
+    height: 60px;
+    font-size: 14px;
+    gap:5px;
+  }
+
+  .footer-button{
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 12px;
+  }
+}

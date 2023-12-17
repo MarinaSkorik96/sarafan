@@ -3,11 +3,10 @@ import Post from "../Post/Post";
 import './PostsStyles.css'
 
 
-const Posts = () => {
+const Posts = ({numbersOfPosts}) => {
   return (
     <div className="posts">
-      Posts
-      <Post />
+      <Post numbersOfPosts={numbersOfPosts} />
     </div>
   )
 }

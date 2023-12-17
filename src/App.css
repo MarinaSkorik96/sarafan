@@ -4,15 +4,23 @@
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
-
+.all-background{
+  min-height: 100%;
+  background-color: rgb(240, 240, 240);
+}
 .App {
   text-align: center;
-  background-color: rgb(226, 250, 250);
-  border: 2px solid black;
+  background-color: rgb(240, 240, 240);
   display: flex;
   flex-direction: row;
-
 }
 
+button:hover {
+  background-color:rgb(203, 219, 249);
+}
+
+button:active{
+  background-color:rgb(161, 192, 248);
+}
 
 
