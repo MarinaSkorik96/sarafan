@@ -6,12 +6,18 @@ const Footer = ({ saveNumberOfPosts }) => {
   const { data: postsData } = useGetAllPostsQuery();
   const numbersOfPosts = localStorage.getItem('quantity')
 
+  const Button = ({ n }) => {
+    return (
+      <button className={Number(numbersOfPosts) === n ? "footer-button footer-button-active" : "footer-button"} onClick={() => { saveNumberOfPosts(n) }}>{n}</button>
+    )
+  }
+
   return (
     <div className="footer-buttons">Показывать по
-      <button className={Number(numbersOfPosts) === 10 ? "footer-button footer-button-active" : "footer-button"} onClick={() => { saveNumberOfPosts(10) }}>10</button>
-      <button className={Number(numbersOfPosts) === 20 ? "footer-button footer-button-active" : "footer-button"} onClick={() => { saveNumberOfPosts(20) }}>20</button>
-      <button className={Number(numbersOfPosts) === 50 ? "footer-button footer-button-active" : "footer-button"} onClick={() => { saveNumberOfPosts(50) }}>50</button>
-      <button className={Number(numbersOfPosts) === 100 ? "footer-button footer-button-active" : "footer-button"} onClick={() => { saveNumberOfPosts(100) }}>100</button>
+      <Button n={10} />
+      <Button n={20} />
+      <Button n={50} />
+      <Button n={100} />
       <button className={Number(numbersOfPosts) >= 100 ? "footer-button footer-button-active" : "footer-button"} onClick={() => { saveNumberOfPosts(postsData.length) }}>Все</button>
       постов
     </div>
