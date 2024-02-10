@@ -3,10 +3,10 @@ import Post from "../Post/Post";
 import './PostsStyles.css'
 
 
-const Posts = ({numbersOfPosts}) => {
+const Posts : React.FC = () => {
   return (
     <div className="posts">
-      <Post numbersOfPosts={numbersOfPosts} />
+      <Post />
     </div>
   )
 }
